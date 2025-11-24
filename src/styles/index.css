@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =======================
+   ESTILOS GLOBAIS
+   ======================= */
+html {
+  scroll-behavior: smooth; /* rolagem suave entre seções */
+}
+
+/* Reseta o body para deixar o Tailwind controlar o layout */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff; /* fundo branco total */
+  color: #111;
+  overflow-x: hidden; /* evita rolagem lateral indesejada */
+  min-height: 100vh;
+}
+
+/* Remove o flex fixo que estava centralizando tudo (atrapalhava o layout) */
+
+/* Exemplo de suavização nos botões (pode deixar ou remover, já usamos Tailwind) */
+button {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* (Opcional) barra de rolagem mais discreta */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
