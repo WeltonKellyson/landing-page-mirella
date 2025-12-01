@@ -2,7 +2,60 @@ import fakemirella from "../assets/fakemirella.webp";
 import vei1 from "../assets/vei1.jpg";
 import aparelho1 from "../assets/aparelho1.png";
 import fundo1 from "../assets/fundo1.jpeg";
+import { useState, useEffect } from "react";
 
+const testimonials = [
+  {
+    name: "Maria Eduarda",
+    text: "O atendimento domiciliar fez toda diferença para a recuperação da minha mãe. Muito atenciosa e profissional.",
+    stars: 5,
+  },
+  {
+    name: "João Henrique",
+    text: "Minha filha adora as sessões! A fisioterapeuta trabalha com muita paciência e criatividade.",
+    stars: 5,
+  },
+  {
+    name: "Dona Francisca",
+    text: "Tive uma melhora significativa nas dores após poucas sessões. Recomendo demais!",
+    stars: 5,
+  },
+  {
+    name: "Carlos Alberto",
+    text: "Profissional excelente, explica tudo com clareza e acompanha cada evolução.",
+    stars: 5,
+  },
+  {
+    name: "Helena Souza",
+    text: "Gostei muito da dedicação e do cuidado. Sempre pontual e muito humana.",
+    stars: 5,
+  },
+  {
+    name: "Seu Antônio",
+    text: "A reabilitação do meu pai só foi possível graças ao trabalho dela. Muito competente!",
+    stars: 5,
+  },
+  {
+    name: "Letícia Ramos",
+    text: "Os exercícios com faixas elásticas ajudaram muito na minha mobilidade. Atendimento nota 10!",
+    stars: 5,
+  },
+  {
+    name: "Paulo Roberto",
+    text: "Meu filho evoluiu muito em equilíbrio e coordenação. Atendimento divertido e eficaz.",
+    stars: 5,
+  },
+  {
+    name: "Marina Lopes",
+    text: "Atendimento acolhedor, cuidadoso e personalizado. Me senti bem desde a primeira sessão.",
+    stars: 5,
+  },
+  {
+    name: "Dona Betina",
+    text: "Recomendo a todos que precisam de fisioterapia. O tratamento é completo e muito profissional.",
+    stars: 5,
+  },
+];
 
 const items = [
   {
@@ -87,6 +140,35 @@ const aparelhos = [
 
 
 export default function Hero() {
+  const visibleCards = 3;
+
+  const extended = [
+    ...testimonials.slice(-visibleCards),
+    ...testimonials,
+    ...testimonials.slice(0, visibleCards),
+  ];
+
+  const [slide, setSlide] = useState(visibleCards);
+  const total = extended.length;
+
+  useEffect(() => {
+    if (slide === 0) {
+      setTimeout(() => {
+        setSlide(testimonials.length);
+      }, 500);
+    }
+
+    if (slide === testimonials.length + visibleCards) {
+      setTimeout(() => {
+        setSlide(visibleCards);
+      }, 500);
+    }
+  }, [slide]);
+
+  const nextSlide = () => setSlide((prev) => prev + 1);
+  const prevSlide = () => setSlide((prev) => prev - 1);
+
+
   return (
     <>
       <section className="bg-[#F4EFE7] w-full">
@@ -398,8 +480,118 @@ export default function Hero() {
       </div>
     </section>
 
+    {/* ===== SEÇÃO 6 — DEPOIMENTOS ===== */}
+<section className="bg-[#F4EFE7] py-20 px-6">
+  <div className="max-w-[1200px] mx-auto text-center mb-12">
+    <h2 className="text-4xl md:text-5xl font-extrabold text-[#43523D]">
+      O que dizem <span className="text-[#6F7F5F]">os pacientes</span>
+    </h2>
+    <p className="text-[#6F7F5F] text-lg mt-2">
+      Feedbacks reais de pessoas que já passaram pelo tratamento
+    </p>
+  </div>
 
+  {/* CONTAINER EXTERNO */}
+  <div className="relative max-w-[1200px] mx-auto overflow-visible">
+
+    {/* CARROSSEL */}
+    <div className="overflow-hidden rounded-xl">
+
+      {/* WRAPPER DOS SLIDES */}
+      <div
+        className="flex transition-transform duration-500"
+        style={{
+          transform: `translateX(-${slide * (100 / testimonials.length)}%)`,
+          width: `${(testimonials.length / 3) * 100}%`,
+        }}
+      >
+        {testimonials.map((t, i) => (
+          <div
+            key={i}
+            className="px-4 flex-shrink-0"
+            style={{ width: `${100 / testimonials.length}%` }}
+          >
+            <div className="bg-white rounded-3xl shadow-xl border p-6 h-full flex flex-col">
+
+              {/* HEADER */}
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-full bg-[#43523D] text-white flex items-center justify-center text-lg font-bold">
+                  {t.name
+                    .split(" ")
+                    .map((p) => p[0])
+                    .join("")
+                    .toUpperCase()}
+                </div>
+              </div>
+
+              {/* NOME */}
+              <p className="font-semibold text-[#43523D]">{t.name}</p>
+
+              {/* ESTRELAS */}
+              <div className="flex gap-1 my-2">
+                {Array.from({ length: t.stars }).map((_, s) => (
+                  <img
+                    key={s}
+                    src="https://img.icons8.com/?size=100&id=8ggStxqyboK5&format=png&color=E0C22B"
+                    className="w-5 h-5"
+                  />
+                ))}
+              </div>
+
+              {/* TEXTO */}
+              <p className="text-[#2B2B2B] text-sm leading-relaxed">
+                {t.text}
+              </p>
+
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* SETA ESQUERDA */}
+<button
+  onClick={prevSlide}
+  className="
+    absolute top-1/2 -left-10
+    transform -translate-y-1/2
+    bg-white shadow-md rounded-full
+    p-3 hover:scale-110 transition
+  "
+>
+  <img
+    src="https://img.icons8.com/?size=100&id=26144&format=png&color=000000"
+    className="w-6 h-6"
+    alt="Seta esquerda"
+  />
+</button>
+
+{/* SETA DIREITA */}
+<button
+  onClick={nextSlide}
+  className="
+    absolute top-1/2 -right-10
+    transform -translate-y-1/2
+    bg-white shadow-md rounded-full
+    p-3 hover:scale-110 transition
+  "
+>
+  <img
+    src="https://img.icons8.com/?size=100&id=26138&format=png&color=000000"
+    className="w-6 h-6"
+    alt="Seta direita"
+  />
+</button>
+
+
+  </div>
+</section>
+
+ 
     
+
+
+
 
       {/* WHATSAPP FIXO */}
       <a
