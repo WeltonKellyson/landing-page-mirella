@@ -347,25 +347,28 @@ export default function Hero() {
                 <p className="text-sm text-gray-200 mt-2 flex-grow">
                   {item.desc}
                 </p>
-
-                {/* BOTÃO — LINHA ÚNICA */}
-                <a
-                  href="#"
-                  target="_blank"
-                  className="inline-flex items-center justify-center gap-2 border border-white text-white font-semibold 
-                  px-6 py-3 rounded-xl mt-6 hover:bg-white hover:text-[#43523D] transition-all
-                  whitespace-nowrap"
-                >
-                  Agendar consulta
-                  <img
-                    src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
-                    alt="WhatsApp ícone"
-                    className="w-5 h-5"
-                  />
-                </a>
               </div>
             </div>
+            
           ))}
+        </div>
+
+        {/* BOTÃO CENTRAL */}
+        <div className="text-center mt-14">
+          <a
+            href="#"
+            target="_blank"
+            className="inline-flex items-center gap-2 bg-[#43523D] text-white 
+          font-semibold px-10 py-4 rounded-xl shadow-lg hover:bg-[#2f3d2b] 
+          transition-all"
+          >
+            Agendar avaliação
+            <img
+              src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
+              alt="WhatsApp"
+              className="w-5 h-5"
+            />
+          </a>
         </div>
       </section>
 
@@ -381,42 +384,51 @@ export default function Hero() {
 
         {/* GRID COM 5 CARDS */}
         <div
-          className="
-          max-w-[1400px] mx-auto
-          grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
-          gap-12 place-items-center
+  className="
+    max-w-[1400px] mx-auto
+    grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
+    gap-12 place-items-center
+  "
+>
+  {aparelhos.map((item, index) => (
+    <div
+      key={index}
+      className="
+        relative bg-[#43523D] rounded-3xl w-full max-w-[320px]
+        pt-20 pb-10 px-6 shadow-lg
+        h-full flex flex-col justify-between
+      "
+    >
+
+      {/* FOTO CIRCULAR */}
+      <div
+        className="
+          absolute -top-14 left-1/2 -translate-x-1/2
+          w-28 h-28 rounded-full overflow-hidden shadow-md border-4 border-[#F4EFE7]
         "
-        >
-          {aparelhos.map((item, index) => (
-            <div
-              key={index}
-              className="relative bg-[#43523D] rounded-3xl w-full max-w-[320px]
-            text-center pt-20 pb-10 px-6 shadow-lg"
-            >
-              {/* FOTO CIRCULAR */}
-              <div
-                className="
-              absolute -top-14 left-1/2 -translate-x-1/2
-              w-28 h-28 rounded-full overflow-hidden shadow-md border-4 border-[#F4EFE7]
-            "
-              >
-                <img
-                  src={item.img}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+      >
+        <img
+          src={item.img}
+          alt={item.title}
+          className="w-full h-full object-cover"
+        />
+      </div>
 
-              {/* TÍTULO */}
-              <h3 className="text-lg font-semibold text-white mt-4">
-                {item.title}
-              </h3>
+      {/* BLOCO DE TEXTO COM ALTURA PADRÃO */}
+      <div className="min-h-[120px] flex flex-col justify-center items-center text-center">
+        <h3 className="text-lg font-semibold text-white mt-4">
+          {item.title}
+        </h3>
 
-              {/* DESCRIÇÃO */}
-              <p className="text-sm text-gray-200 mt-2">{item.desc}</p>
-            </div>
-          ))}
-        </div>
+        <p className="text-sm text-gray-200 mt-2">
+          {item.desc}
+        </p>
+      </div>
+
+    </div>
+  ))}
+</div>
+
 
         {/* BOTÃO CENTRAL */}
         <div className="text-center mt-14">
