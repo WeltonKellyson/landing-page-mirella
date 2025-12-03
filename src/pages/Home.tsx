@@ -228,20 +228,31 @@ export default function Hero() {
               {/* LOGO */}
               <img 
                 src={logo} 
-                alt="Logo Mirella Letícia" 
+                alt="Logo Mirella" 
                 className="w-40 mx-auto md:mx-0 mb-2"
               />
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#1F4E79] leading-[1.1]">
-                Mirella Letícia
+              <h1 className="
+                text-3xl        /* mobile */
+                sm:text-4xl     /* acima de 640px */
+                md:text-5xl     /* tablets */
+                lg:text-6xl     /* desktops */
+                font-extrabold 
+                text-[#1F4E79] 
+                leading-[1.1]
+                whitespace-nowrap
+                text-center md:text-left
+              ">
+                Mirella Albuquerque
               </h1>
 
-              <p className="text-[#2F6DA6] text-2xl md:text-3xl font-semibold">
+              <p className="text-[#2F6DA6] text-xl md:text-2xl font-semibold mt-2">
                 Fisioterapia domiciliar e particular <br /> em Recife-PE
               </p>
 
+
               {/* LISTA EM 2 COLUNAS */}
-              <div className="grid grid-cols-2 gap-x-10 gap-y-3 mt-4 max-w-[600px]">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-2 mt-4 max-w-[550px]">
                 {[
                   'Reabilitação motora',
                   'Fortalecimento muscular',
@@ -256,14 +267,14 @@ export default function Hero() {
                 ].map((item, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-2 text-base text-[#1E293B]"
+                    className="flex items-center gap-2 text-sm md:text-base text-[#1E293B]"
                   >
                     <span className="text-[#2F6DA6] text-lg">✔</span> {item}
                   </div>
                 ))}
               </div>
 
-              <p className="text-[#D62828] font-semibold mt-2">
+              <p className="text-[#D62828] font-semibold mt-1 text-sm md:text-base">
                 ✘ Não atendo planos de saúde
               </p>
 
@@ -680,12 +691,12 @@ export default function Hero() {
 
       
       {/* ===== SEÇÃO — FAQ ===== */}
-      <section id="faq" className="bg-[#F4EFE7] py-20 px-6">
+      <section id="faq" className="bg-[#F8FAFC] py-20 px-6">
         <div className="max-w-[900px] mx-auto text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#43523D]">
-            Dúvidas <span className="text-[#6F7F5F]">frequentes</span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
+            Dúvidas <span className="text-[#2F6DA6]">frequentes</span>
           </h2>
-          <p className="text-[#6F7F5F] text-lg mt-3">
+          <p className="text-[#2F6DA6] text-lg mt-3">
             Tire suas principais dúvidas antes de agendar sua consulta
           </p>
         </div>
@@ -714,14 +725,14 @@ export default function Hero() {
                   onClick={() =>
                     setOpenIndex(openIndex === index ? null : index)
                   }
-                  className="w-full flex justify-between items-center text-left px-6 py-5 font-semibold text-[#43523D] hover:bg-gray-50 rounded-xl transition"
+                  className="w-full flex justify-between items-center text-left px-6 py-5 font-semibold text-[#1F4E79] hover:bg-gray-50 rounded-xl transition"
                 >
                   {faq.question}
 
                   {/* Ícone da seta */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`w-5 h-5 text-[#6F7F5F] transform transition-transform duration-300 ${
+                    className={`w-5 h-5 text-[#2F6DA6] transform transition-transform duration-300 ${
                       openIndex === index ? "rotate-180" : "rotate-0"
                     }`}
                     fill="none"
