@@ -1,7 +1,7 @@
-import mirella from '../assets/teste.png';
+import fundo from '../assets/fundo1.png';
 import logo from '../assets/logo.png';
 import aparelho1 from '../assets/aparelho1.png';
-import fundo1 from '../assets/fundo1.png';
+import fundo1 from '../assets/img6.jpeg';
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -218,25 +218,26 @@ export default function Hero() {
   return (
     <>
     {/* ===== SEÇÃO 1 ===== */}
-      <section className="bg-[#F8FAFC] w-full">
+      <section
+        className="relative w-full overflow-x-hidden bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${fundo})` }}
+      >
         <div className="max-w-[1500px] mx-auto px-6 md:px-16 lg:px-24 xl:px-32 min-h-[85vh] flex items-center pb-10">
-          <div className="flex flex-col md:flex-row items-center justify-between w-full gap-12">
+          <div className="flex-1 flex flex-col items-center text-center space-y-2">
             
             {/* ===== TEXTO ===== */}
-            <div className="flex-1 space-y-2 text-center md:text-left">
+            <div className="flex-1 space-y-2 text-center md:text-center">
 
               {/* LOGO */}
               <img 
                 src={logo}
                 alt="Logo Mirella"
                 className="
-                  w-40 
-                  mx-auto           /* CENTRALIZA NO MOBILE */
-                  md:mx-0           /* REMOVE centralização no desktop */
-                  md:ml-[-25px]     /* SÓ no desktop aplica a margem negativa */
+                  w-80 
+                  mx-auto        /* CENTRALIZA EM TODAS AS TELAS */
                   mb-2 md:mb-4
                 "
-                style={{ objectFit: "contain" }}
+                style={{ objectFit: 'contain' }}
               />
 
               <h1 className="
@@ -253,52 +254,9 @@ export default function Hero() {
                 Mirella Albuquerque
               </h1>
 
-              <p className="text-[#2F6DA6] text-xl md:text-2xl font-semibold mt-2">
+              <p className="text-[#1F4E79] text-xl md:text-2xl font-semibold mt-2">
                 Fisioterapia domiciliar e particular <br /> em Recife-PE
               </p>
-
-
-              {/* LISTA EM 3 COLUNAS */}
-              <div className="grid grid-cols-3 gap-x-8 gap-y-2 mt-4 max-w-[550px]">
-                {[
-                  'Reabilitação motora',
-                  'Fortalecimento muscular',
-                  'Alongamentos e mobilidade',
-                  'Treino de marcha e postura',
-                  'Prevenção de quedas',
-                  'Tratamento de dores',
-                  'Estimulação precoce infantil',
-                  'Reabilitação respiratória',
-                  'Avaliação do paciente',
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-2 text-sm md:text-base text-[#1E293B]"
-                  >
-                    <span className="text-[#2F6DA6] text-lg">✔</span> {item}
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-[#D62828] font-semibold mt-1 text-sm md:text-base">
-                ✘ Não atendo planos de saúde
-              </p>
-            </div>
-
-            {/* ===== IMAGEM ===== */}
-            <div className="flex-1 flex justify-center md:justify-end pt-10 pb-10 relative">
-              {/* IMAGEM QUADRADA COM TOPO ARREDONDADO */}
-              <img
-                src={mirella}
-                alt="Fisioterapeuta"
-                className="
-                  relative z-10
-                  w-[95%] md:w-[80%] lg:w-[75%] xl:w-[70%]
-                  rounded-t-3xl           /* 🔥 arredonda só o topo */
-                  mt-16
-
-                "
-              />
             </div>
           </div>
         </div>
@@ -322,7 +280,7 @@ export default function Hero() {
               animate-[pulse-custom_2.4s_ease-in-out_infinite]
             "
           >
-            Agendar avaliação
+            Agendar uma avaliação gratis
 
             <img
               src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
@@ -378,7 +336,7 @@ export default function Hero() {
 
 
       {/* ===== SEÇÃO 3 — DOENÇAS E TRATAMENTOS ===== */}
-      <section className="bg-[#F8FAFC] py-20 px-6">
+      <section className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
         <div className="max-w-[1400px] mx-auto text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             Doenças e <span className="text-[#2F6DA6]">Tratamentos</span>
@@ -455,7 +413,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO 4 — APRELHOS E RECURSOS ===== */}
-      <section className="bg-[#F8FAFC] py-20 px-6">
+      <section className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
         {/* TÍTULO */}
         <div className="max-w-[1400px] mx-auto text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
@@ -544,7 +502,7 @@ export default function Hero() {
 
       {/* ===== SEÇÃO 5 — AGENDAMENTO ===== */}
       <section
-        className="w-full bg-cover bg-center bg-no-repeat py-24 px-6 relative"
+        className="w-full bg-cover bg-center bg-no-repeat py-24 px-6 relative overflow-x-hidden"
         style={{
           backgroundImage: `url(${fundo1})`,
         }}
@@ -615,7 +573,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO 6 — DEPOIMENTOS ===== */}
-      <section className="bg-[#F8FAFC] py-20 px-6">
+      <section className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
         <div className="max-w-[1200px] mx-auto text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             O que dizem <span className="text-[#2F6DA6]">os pacientes</span>
@@ -728,7 +686,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO — MÉTRICAS ===== */}
-      <section className="w-full bg-[#1F4E79] py-20 text-white">
+      <section className="w-full bg-[#1F4E79] py-20 text-white overflow-x-hidden">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 text-center gap-10 px-6">
 
           {/* CARD 1 */}
@@ -754,7 +712,7 @@ export default function Hero() {
 
       
       {/* ===== SEÇÃO — FAQ ===== */}
-      <section id="faq" className="bg-[#F8FAFC] py-20 px-6">
+      <section id="faq" className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
         <div className="max-w-[900px] mx-auto text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             Dúvidas <span className="text-[#2F6DA6]">frequentes</span>
@@ -820,7 +778,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO — ONDE NOS ENCONTRAR? ===== */}
-      <section className="bg-[#F8FAFC] pt-24 pb-12 px-6">
+      <section className="bg-[#F8FAFC] pt-24 pb-12 px-6 overflow-x-hidden">
         <div className="max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* COLUNA ESQUERDA — TEXTO */}
           <div>
@@ -874,7 +832,7 @@ export default function Hero() {
       {/* ===== RODAPÉ ===== */}
       <section
         id="footer"
-        className="bg-[#0D1B2A] text-gray-300 py-12 px-6"
+        className="bg-[#0D1B2A] text-gray-300 py-12 px-6 overflow-x-hidden"
       >
         <div
           className="
