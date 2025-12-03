@@ -1,10 +1,10 @@
 import fundo from '../assets/fundo1.png';
-import logo from '../assets/logo.png';
+import logo from '../assets/Logo.png';
 import aparelho1 from '../assets/aparelho1.png';
 import aparelho2 from '../assets/aparelho2.jpg';
 import aparelho3 from '../assets/aparelho3.png';
 import aparelho4 from '../assets/aparelho4.jpg';
-import aparelho5 from '../assets/aparelho1.png';
+//import aparelho5 from '../assets/aparelho1.png';
 import fundo1 from '../assets/img6.jpeg';
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
