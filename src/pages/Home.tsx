@@ -1,6 +1,10 @@
 import fundo from '../assets/fundo1.png';
 import logo from '../assets/logo.png';
 import aparelho1 from '../assets/aparelho1.png';
+import aparelho2 from '../assets/aparelho2.jpg';
+import aparelho3 from '../assets/aparelho3.png';
+import aparelho4 from '../assets/aparelho4.jpg';
+import aparelho5 from '../assets/aparelho1.png';
 import fundo1 from '../assets/img6.jpeg';
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
@@ -115,17 +119,17 @@ const aparelhos = [
   {
     title: 'Faixas elásticas (Thera Band)',
     desc: 'Fortalecimento, alongamento e exercícios funcionais.',
-    img: aparelho1,
+    img: aparelho2,
   },
   {
     title: 'Bola suíça terapêutica',
     desc: 'Equilíbrio, postura, coordenação e fortalecimento.',
-    img: aparelho1,
+    img: aparelho3,
   },
   {
     title: 'Mini Band',
     desc: 'Excelente para quadril, glúteos, joelhos e estabilidade.',
-    img: aparelho1,
+    img: aparelho2,
   },
   {
     title: 'TENS/EMS portátil',
@@ -135,7 +139,7 @@ const aparelhos = [
   {
     title: 'Step / Plataforma de equilíbrio',
     desc: 'Marcha, força de MMII e prevenção de quedas.',
-    img: aparelho1,
+    img: aparelho4,
   },
 ];
 
@@ -426,7 +430,7 @@ export default function Hero() {
           className="
             max-w-[1400px] mx-auto
             grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
-            gap-12 place-items-center
+            gap-16 place-items-center
           "
         >
           {aparelhos.map((item, index) => (
