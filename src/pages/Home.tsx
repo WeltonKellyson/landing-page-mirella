@@ -1,10 +1,18 @@
-import fakemirella from '../assets/fakemirella.webp';
-import vei1 from '../assets/vei1.jpg';
+import mirella from '../assets/mirella.jpeg';
+import logo from '../assets/logo.png';
 import aparelho1 from '../assets/aparelho1.png';
-import fundo1 from '../assets/fundo1.jpeg';
+import fundo1 from '../assets/fundo1.png';
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import img1 from '../assets/img1.jpeg';
+import img2 from '../assets/img2.jpeg';
+import img3 from '../assets/img3.jpeg';
+import img4 from '../assets/img4.jpeg';
+import img5 from '../assets/img5.jpeg';
+import img6 from '../assets/img6.jpeg';
+import img7 from '../assets/img7.jpeg';
+import img8 from '../assets/img8.jpeg';
 
 
 const testimonials = [
@@ -64,42 +72,42 @@ const items = [
   {
     title: 'Reabilitação motora',
     desc: 'AVC, fraturas, pós-cirúrgico e mobilidade.',
-    img: vei1,
+    img: img1,
   },
   {
     title: 'Fortalecimento muscular',
     desc: 'Força, estabilidade e equilíbrio.',
-    img: vei1,
+    img: img2,
   },
   {
     title: 'Alongamentos e mobilidade',
     desc: 'Flexibilidade e amplitude dos movimentos.',
-    img: vei1,
+    img: img3,
   },
   {
     title: 'Treino de marcha e postura',
     desc: 'Caminhada correta e ajustes posturais.',
-    img: vei1,
+    img: img4,
   },
   {
     title: 'Prevenção de quedas',
     desc: 'Equilíbrio, coordenação e segurança.',
-    img: vei1,
+    img: img5,
   },
   {
     title: 'Tratamento de dores',
     desc: 'Técnicas manuais e liberação miofascial.',
-    img: vei1,
+    img: img6,
   },
   {
     title: 'Estimulação precoce infantil',
     desc: 'Desenvolvimento motor e coordenação.',
-    img: vei1,
+    img: img7,
   },
   {
     title: 'Reabilitação respiratória',
     desc: 'Respiração, secreções e capacidade pulmonar.',
-    img: vei1,
+    img: img8,
   },
 ];
 
@@ -161,7 +169,23 @@ const faqs = [
 
 
 export default function Hero() {
-  const visibleCards = 3;
+  // Número de cards por vez → responsivo
+  const getCardsPerView = () => {
+    if (window.innerWidth < 640) return 1;     // Mobile
+    if (window.innerWidth < 1024) return 2;    // Tablet
+    return 3;                                  // Desktop
+  };
+
+  const [visibleCards, setVisibleCards] = useState(getCardsPerView());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleCards(getCardsPerView());
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const extended = [
     ...testimonials.slice(-visibleCards),
@@ -193,17 +217,26 @@ export default function Hero() {
 
   return (
     <>
-      <section className="bg-[#F4EFE7] w-full">
-        {/* ===== HERO — ALTURA PROPORCIONAL ===== */}
-        <div className="max-w-[1500px] mx-auto px-6 md:px-16 lg:px-24 xl:px-32 min-h-[85vh] flex items-center">
+    {/* ===== SEÇÃO 1 ===== */}
+      <section className="bg-[#F8FAFC] w-full">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-16 lg:px-24 xl:px-32 min-h-[85vh] flex items-center pt-10 pb-16">
           <div className="flex flex-col md:flex-row items-center justify-between w-full gap-12">
+            
             {/* ===== TEXTO ===== */}
-            <div className="flex-1 space-y-5 text-center md:text-left">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#43523D] leading-[1.1]">
+            <div className="flex-1 space-y-2 text-center md:text-left">
+
+              {/* LOGO */}
+              <img 
+                src={logo} 
+                alt="Logo Mirella Letícia" 
+                className="w-40 mx-auto md:mx-0 mb-2"
+              />
+
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-[#1F4E79] leading-[1.1]">
                 Mirella Letícia
               </h1>
 
-              <p className="text-[#6F7F5F] text-2xl md:text-3xl font-semibold">
+              <p className="text-[#2F6DA6] text-2xl md:text-3xl font-semibold">
                 Fisioterapia domiciliar e particular <br /> em Recife-PE
               </p>
 
@@ -223,14 +256,14 @@ export default function Hero() {
                 ].map((item, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-2 text-base text-[#2B2B2B]"
+                    className="flex items-center gap-2 text-base text-[#1E293B]"
                   >
-                    <span className="text-[#6F7F5F] text-lg">✔</span> {item}
+                    <span className="text-[#2F6DA6] text-lg">✔</span> {item}
                   </div>
                 ))}
               </div>
 
-              <p className="text-red-700 font-semibold mt-2">
+              <p className="text-[#D62828] font-semibold mt-2">
                 ✘ Não atendo planos de saúde
               </p>
 
@@ -238,8 +271,8 @@ export default function Hero() {
               <a
                 href="#"
                 target="_blank"
-                className="inline-flex items-center gap-2 bg-[#43523D] text-white font-semibold px-10 py-4 rounded-xl shadow-lg 
-                          hover:bg-[#2f3d2b] transition-all mt-2"
+                className="inline-flex items-center gap-2 bg-[#1F4E79] text-white font-semibold px-10 py-4 rounded-xl shadow-lg 
+                          hover:bg-[#163B5C] transition-all mt-2"
               >
                 Agendar consulta
                 <img
@@ -251,21 +284,22 @@ export default function Hero() {
             </div>
 
             {/* ===== IMAGEM ===== */}
-            <div className="flex-1 flex justify-center md:justify-end">
+            <div className="flex-1 flex justify-center md:justify-end pt-10 pb-10">
               <img
-                src={fakemirella}
+                src={mirella}
                 alt="Fisioterapeuta"
-                className="w-[95%] md:w-[80%] lg:w-[75%] xl:w-[70%] rounded-[35px] shadow-2xl object-cover"
+                className="w-[95%] md:w-[80%] lg:w-[75%] xl:w-[65%] rounded-[50%] shadow-2xl object-cover"
               />
             </div>
           </div>
         </div>
 
         {/* ===== SEÇÃO 2 — SERVIÇOS ===== */}
-        <div className="w-full bg-[#43523D] text-white py-14 px-6">
+        <div className="w-full bg-[#1F4E79] text-white py-14 px-6">
           <div className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-14 text-center">
+
             {/* CARD 1 */}
-            <div className="flex flex-col items-center space-y-3">
+            <div className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform">
               <div className="w-14 h-14 border-2 border-white rounded-full flex items-center justify-center text-2xl">
                 ✔
               </div>
@@ -274,18 +308,16 @@ export default function Hero() {
             </div>
 
             {/* CARD 2 */}
-            <div className="flex flex-col items-center space-y-3">
+            <div className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform">
               <div className="w-14 h-14 border-2 border-white rounded-full flex items-center justify-center text-2xl">
                 ✔
               </div>
-              <h3 className="text-lg font-semibold">
-                Fortalecimento & Mobilidade
-              </h3>
+              <h3 className="text-lg font-semibold">Fortalecimento & Mobilidade</h3>
               <p className="text-sm opacity-90">Alongamentos e equilíbrio</p>
             </div>
 
             {/* CARD 3 */}
-            <div className="flex flex-col items-center space-y-3">
+            <div className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform">
               <div className="w-14 h-14 border-2 border-white rounded-full flex items-center justify-center text-2xl">
                 ✔
               </div>
@@ -294,24 +326,26 @@ export default function Hero() {
             </div>
 
             {/* CARD 4 */}
-            <div className="flex flex-col items-center space-y-3">
+            <div className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform">
               <div className="w-14 h-14 border-2 border-white rounded-full flex items-center justify-center text-2xl">
                 ✔
               </div>
               <h3 className="text-lg font-semibold">Respiração & Orientação</h3>
               <p className="text-sm opacity-90">Acompanhamento familiar</p>
             </div>
+
           </div>
         </div>
       </section>
 
+
       {/* ===== SEÇÃO 3 — DOENÇAS E TRATAMENTOS ===== */}
-      <section className="bg-[#F4EFE7] py-20 px-6">
+      <section className="bg-[#F8FAFC] py-20 px-6">
         <div className="max-w-[1400px] mx-auto text-center mb-14">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#43523D]">
-            Doenças e <span className="text-[#6F7F5F]">Tratamentos</span>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
+            Doenças e <span className="text-[#2F6DA6]">Tratamentos</span>
           </h2>
-          <p className="text-[#6F7F5F] text-lg mt-2">
+          <p className="text-[#2F6DA6] text-lg mt-2">
             Conheça alguns tipos de dores e condições tratadas rotineiramente
           </p>
         </div>
@@ -327,7 +361,7 @@ export default function Hero() {
           {items.map((item, index) => (
             <div
               key={index}
-              className="bg-white rounded-3xl overflow-hidden shadow-lg border border-[#EEE] flex flex-col"
+              className="bg-white rounded-3xl overflow-hidden shadow-lg border border-[#E2E8F0] flex flex-col hover:shadow-2xl transition-shadow"
             >
               {/* FOTO */}
               <div className="w-full h-48 overflow-hidden">
@@ -338,18 +372,17 @@ export default function Hero() {
                 />
               </div>
 
-              {/* CONTEÚDO COM ALTURA IGUAL PARA TODOS */}
-              <div className="bg-[#43523D] p-6 text-center text-white flex flex-col flex-grow">
+              {/* CONTEÚDO */}
+              <div className="bg-[#1F4E79] p-6 text-center text-white flex flex-col flex-grow">
                 {/* TITULO */}
                 <h3 className="text-lg font-semibold">{item.title}</h3>
 
                 {/* DESCRIÇÃO */}
-                <p className="text-sm text-gray-200 mt-2 flex-grow">
+                <p className="text-sm text-blue-100 mt-2 flex-grow">
                   {item.desc}
                 </p>
               </div>
             </div>
-            
           ))}
         </div>
 
@@ -358,9 +391,9 @@ export default function Hero() {
           <a
             href="#"
             target="_blank"
-            className="inline-flex items-center gap-2 bg-[#43523D] text-white 
-          font-semibold px-10 py-4 rounded-xl shadow-lg hover:bg-[#2f3d2b] 
-          transition-all"
+            className="inline-flex items-center gap-2 bg-[#1F4E79] text-white 
+            font-semibold px-10 py-4 rounded-xl shadow-lg hover:bg-[#163B5C] 
+            transition-all"
           >
             Agendar avaliação
             <img
@@ -384,50 +417,50 @@ export default function Hero() {
 
         {/* GRID COM 5 CARDS */}
         <div
-  className="
-    max-w-[1400px] mx-auto
-    grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
-    gap-12 place-items-center
-  "
->
-  {aparelhos.map((item, index) => (
-    <div
-      key={index}
-      className="
-        relative bg-[#43523D] rounded-3xl w-full max-w-[320px]
-        pt-20 pb-10 px-6 shadow-lg
-        h-full flex flex-col justify-between
-      "
-    >
+            className="
+              max-w-[1400px] mx-auto
+              grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
+              gap-12 place-items-center
+            "
+          >
+            {aparelhos.map((item, index) => (
+              <div
+                key={index}
+                className="
+                  relative bg-[#43523D] rounded-3xl w-full max-w-[320px]
+                  pt-20 pb-10 px-6 shadow-lg
+                  h-full flex flex-col justify-between
+                "
+              >
 
-      {/* FOTO CIRCULAR */}
-      <div
-        className="
-          absolute -top-14 left-1/2 -translate-x-1/2
-          w-28 h-28 rounded-full overflow-hidden shadow-md border-4 border-[#F4EFE7]
-        "
-      >
-        <img
-          src={item.img}
-          alt={item.title}
-          className="w-full h-full object-cover"
-        />
-      </div>
+                {/* FOTO CIRCULAR */}
+                <div
+                  className="
+                    absolute -top-14 left-1/2 -translate-x-1/2
+                    w-28 h-28 rounded-full overflow-hidden shadow-md border-4 border-[#F4EFE7]
+                  "
+                >
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-      {/* BLOCO DE TEXTO COM ALTURA PADRÃO */}
-      <div className="min-h-[120px] flex flex-col justify-center items-center text-center">
-        <h3 className="text-lg font-semibold text-white mt-4">
-          {item.title}
-        </h3>
+                {/* BLOCO DE TEXTO COM ALTURA PADRÃO */}
+                <div className="min-h-[120px] flex flex-col justify-center items-center text-center">
+                  <h3 className="text-lg font-semibold text-white mt-4">
+                    {item.title}
+                  </h3>
 
-        <p className="text-sm text-gray-200 mt-2">
-          {item.desc}
-        </p>
-      </div>
+                  <p className="text-sm text-gray-200 mt-2">
+                    {item.desc}
+                  </p>
+                </div>
 
-    </div>
-  ))}
-</div>
+              </div>
+            ))}
+          </div>
 
 
         {/* BOTÃO CENTRAL */}
@@ -507,107 +540,116 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO 6 — DEPOIMENTOS ===== */}
-      <section className="bg-[#F4EFE7] py-20 px-6">
-        <div className="max-w-[1200px] mx-auto text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#43523D]">
-            O que dizem <span className="text-[#6F7F5F]">os pacientes</span>
-          </h2>
-          <p className="text-[#6F7F5F] text-lg mt-2">
-            Feedbacks reais de pessoas que já passaram pelo tratamento
-          </p>
-        </div>
+<section className="bg-[#F4EFE7] py-20 px-6">
+  <div className="max-w-[1200px] mx-auto text-center mb-12">
+    <h2 className="text-4xl md:text-5xl font-extrabold text-[#43523D]">
+      O que dizem <span className="text-[#6F7F5F]">os pacientes</span>
+    </h2>
+    <p className="text-[#6F7F5F] text-lg mt-2">
+      Feedbacks reais de pessoas que já passaram pelo tratamento
+    </p>
+  </div>
 
-        {/* CONTAINER EXTERNO */}
-        <div className="relative max-w-[1200px] mx-auto overflow-visible">
-          {/* CARROSSEL */}
-          <div className="overflow-hidden rounded-xl">
-            {/* WRAPPER DOS SLIDES */}
-            <div
-              className="flex transition-transform duration-500"
-              style={{
-                transform: `translateX(-${
-                  slide * (100 / testimonials.length)
-                }%)`,
-                width: `${(testimonials.length / 3) * 100}%`,
-              }}
-            >
-              {testimonials.map((t, i) => (
-                <div
-                  key={i}
-                  className="px-4 flex-shrink-0"
-                  style={{ width: `${100 / testimonials.length}%` }}
-                >
-                  <div className="bg-white rounded-3xl shadow-xl border p-6 h-full flex flex-col">
-                    {/* HEADER */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 rounded-full bg-[#43523D] text-white flex items-center justify-center text-lg font-bold">
-                        {t.name
-                          .split(' ')
-                          .map((p) => p[0])
-                          .join('')
-                          .toUpperCase()}
-                      </div>
-                    </div>
+  {/** CARDS POR TELA */}
+  <div className="relative max-w-[1200px] mx-auto">
 
-                    {/* NOME */}
-                    <p className="font-semibold text-[#43523D]">{t.name}</p>
-
-                    {/* ESTRELAS */}
-                    <div className="flex gap-1 my-2">
-                      {Array.from({ length: t.stars }).map((_, s) => (
-                        <img
-                          key={s}
-                          src="https://img.icons8.com/?size=100&id=8ggStxqyboK5&format=png&color=E0C22B"
-                          className="w-5 h-5"
-                        />
-                      ))}
-                    </div>
-
-                    {/* TEXTO */}
-                    <p className="text-[#2B2B2B] text-sm leading-relaxed">
-                      {t.text}
-                    </p>
-                  </div>
+    <div className="overflow-hidden rounded-xl">
+      <div
+        className="flex transition-transform duration-500"
+        style={{
+          transform: `translateX(-${slide * (100 / visibleCards)}%)`,
+        }}
+      >
+        {extended.map((t, i) => (
+          <div
+            key={i}
+            className="px-4 flex-shrink-0"
+            style={{
+              width:
+                visibleCards === 1
+                  ? "100%"
+                  : visibleCards === 2
+                  ? "50%"
+                  : "33.3333%",
+            }}
+          >
+            <div className="bg-white rounded-3xl shadow-xl border p-6 h-full flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 rounded-full bg-[#43523D] text-white flex items-center justify-center text-lg font-bold">
+                  {t.name
+                    .split(" ")
+                    .map((p) => p[0])
+                    .join("")
+                    .toUpperCase()}
                 </div>
-              ))}
+              </div>
+
+              <p className="font-semibold text-[#43523D]">{t.name}</p>
+
+              <div className="flex gap-1 my-2">
+                {Array.from({ length: t.stars }).map((_, s) => (
+                  <img
+                    key={s}
+                    src="https://img.icons8.com/?size=100&id=8ggStxqyboK5&format=png&color=E0C22B"
+                    className="w-5 h-5"
+                  />
+                ))}
+              </div>
+
+              <p className="text-[#2B2B2B] text-sm leading-relaxed">
+                {t.text}
+              </p>
             </div>
           </div>
+        ))}
+      </div>
+    </div>
 
-          {/* SETA ESQUERDA */}
-          <button
-            onClick={prevSlide}
-            className="
-            absolute top-1/2 -left-10
-            transform -translate-y-1/2
-            bg-white shadow-md rounded-full
-            p-3 hover:scale-110 transition
-          "
-          >
-            <img
-              src="https://img.icons8.com/?size=100&id=26144&format=png&color=000000"
-              className="w-6 h-6"
-              alt="Seta esquerda"
-            />
-          </button>
+    {/* SETA ESQUERDA */}
+    <button
+      onClick={prevSlide}
+      className="
+        absolute top-1/2 left-2 md:-left-10
+        -translate-y-1/2 bg-white shadow-md rounded-full
+        p-2 md:p-3 hover:scale-110 transition z-10
+      "
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-5 h-5 text-[#43523D]"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
 
-          {/* SETA DIREITA */}
-          <button
-            onClick={nextSlide}
-            className="
-            absolute top-1/2 -right-10
-            transform -translate-y-1/2
-            bg-white shadow-md rounded-full
-            p-3 hover:scale-110 transition
-          "
-          >
-            <img
-              src="https://img.icons8.com/?size=100&id=26138&format=png&color=000000"
-              className="w-6 h-6"
-              alt="Seta direita"
-            />
-          </button>
-        </div>
-      </section>
+    {/* SETA DIREITA */}
+    <button
+      onClick={nextSlide}
+      className="
+        absolute top-1/2 right-2 md:-right-10
+        -translate-y-1/2 bg-white shadow-md rounded-full
+        p-2 md:p-3 hover:scale-110 transition z-10
+      "
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-5 h-5 text-[#43523D]"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+
+  </div>
+</section>
+
 
       {/* ===== SEÇÃO — MÉTRICAS ===== */}
       <section className="w-full bg-[#43523D] py-20 text-white">
@@ -703,7 +745,8 @@ export default function Hero() {
 
 
       {/* ===== SEÇÃO — ONDE NOS ENCONTRAR? ===== */}
-      <section className="bg-[#F4EFE7] py-24 px-6">
+      <section className="bg-[#F4EFE7] pt-24 pb-12 px-6">
+
         <div className="max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
           {/* COLUNA ESQUERDA — TEXTO */}
@@ -759,9 +802,15 @@ export default function Hero() {
       {/* ===== RODAPÉ ===== */}
       <section
         id="footer"
-        className="bg-[#1F2A1D] text-gray-300 py-12 px-6 mt-24"
+        className="bg-[#1F2A1D] text-gray-300 py-12 px-6"
       >
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="
+          max-w-[1200px] mx-auto 
+          flex flex-col md:flex-row 
+          justify-between 
+          items-start 
+          gap-12
+        ">
 
           {/* ==== COLUNA ESQUERDA ==== */}
           <div>
@@ -782,39 +831,21 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ==== NAVEGAÇÃO EM 2 COLUNAS ==== */}
-          <div className="md:text-right w-full md:w-auto">
+          {/* ==== NAVEGAÇÃO ==== */}
+          <div className="md:text-right w-full md:w-auto ml-auto">
             <h4 className="font-semibold text-[#CDE6C1] text-md mb-3">
               Navegação
             </h4>
 
             <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-gray-400 text-sm md:text-right">
+              <a href="#hero" className="hover:text-white transition">Início</a>
+              <a href="#aparelhos" className="hover:text-white transition">Aparelhos</a>
 
-              <a href="#hero" className="hover:text-white transition">
-                Início
-              </a>
-              <a href="#aparelhos" className="hover:text-white transition">
-                Aparelhos
-              </a>
+              <a href="#servicos" className="hover:text-white transition">Serviços</a>
+              <a href="#depoimentos" className="hover:text-white transition">Depoimentos</a>
 
-              <a href="#servicos" className="hover:text-white transition">
-                Serviços
-              </a>
-              <a href="#depoimentos" className="hover:text-white transition">
-                Depoimentos
-              </a>
-
-              <a href="#tratamentos" className="hover:text-white transition">
-                Tratamentos
-              </a>
-              <a href="#faq" className="hover:text-white transition">
-                Perguntas
-              </a>
-
-              <a href="#contato" className="hover:text-white transition">
-                Contato
-              </a>
-
+              <a href="#tratamentos" className="hover:text-white transition">Tratamentos</a>
+              <a href="#faq" className="hover:text-white transition">Perguntas</a>
             </div>
           </div>
 
@@ -825,9 +856,6 @@ export default function Hero() {
           © {new Date().getFullYear()} Mirella Letícia — Todos os direitos reservados.
         </div>
       </section>
-
-        
-
 
       {/* WHATSAPP FIXO */}
       <a
