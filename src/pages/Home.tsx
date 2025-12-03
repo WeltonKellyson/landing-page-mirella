@@ -406,71 +406,71 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO 4 — APRELHOS E RECURSOS ===== */}
-      <section className="bg-[#F4EFE7] py-20 px-6">
+      <section className="bg-[#F8FAFC] py-20 px-6">
         {/* TÍTULO */}
         <div className="max-w-[1400px] mx-auto text-center mb-14">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#43523D]">
-            Aparelhos e <span className="text-[#6F7F5F]">Recursos</span>{' '}
-            utilizados
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
+            Aparelhos e <span className="text-[#2F6DA6]">Recursos</span> utilizados
           </h2>
         </div>
 
         {/* GRID COM 5 CARDS */}
         <div
-            className="
-              max-w-[1400px] mx-auto
-              grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
-              gap-12 place-items-center
-            "
-          >
-            {aparelhos.map((item, index) => (
+          className="
+            max-w-[1400px] mx-auto
+            grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
+            gap-12 place-items-center
+          "
+        >
+          {aparelhos.map((item, index) => (
+            <div
+              key={index}
+              className="
+                relative bg-[#1F4E79] rounded-3xl w-full max-w-[320px]
+                pt-20 pb-10 px-6 shadow-lg
+                h-full flex flex-col justify-between
+                hover:shadow-2xl transition-shadow
+              "
+            >
+
+              {/* FOTO CIRCULAR */}
               <div
-                key={index}
                 className="
-                  relative bg-[#43523D] rounded-3xl w-full max-w-[320px]
-                  pt-20 pb-10 px-6 shadow-lg
-                  h-full flex flex-col justify-between
+                  absolute -top-14 left-1/2 -translate-x-1/2
+                  w-28 h-28 rounded-full overflow-hidden shadow-md 
+                  border-4 border-[#F8FAFC]
                 "
               >
-
-                {/* FOTO CIRCULAR */}
-                <div
-                  className="
-                    absolute -top-14 left-1/2 -translate-x-1/2
-                    w-28 h-28 rounded-full overflow-hidden shadow-md border-4 border-[#F4EFE7]
-                  "
-                >
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* BLOCO DE TEXTO COM ALTURA PADRÃO */}
-                <div className="min-h-[120px] flex flex-col justify-center items-center text-center">
-                  <h3 className="text-lg font-semibold text-white mt-4">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm text-gray-200 mt-2">
-                    {item.desc}
-                  </p>
-                </div>
-
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            ))}
-          </div>
 
+              {/* TEXTO */}
+              <div className="min-h-[120px] flex flex-col justify-center items-center text-center">
+                <h3 className="text-lg font-semibold text-white mt-4">
+                  {item.title}
+                </h3>
+
+                <p className="text-sm text-blue-100 mt-2">
+                  {item.desc}
+                </p>
+              </div>
+
+            </div>
+          ))}
+        </div>
 
         {/* BOTÃO CENTRAL */}
         <div className="text-center mt-14">
           <a
             href="#"
             target="_blank"
-            className="inline-flex items-center gap-2 bg-[#43523D] text-white 
-          font-semibold px-10 py-4 rounded-xl shadow-lg hover:bg-[#2f3d2b] 
-          transition-all"
+            className="inline-flex items-center gap-2 bg-[#1F4E79] text-white 
+            font-semibold px-10 py-4 rounded-xl shadow-lg hover:bg-[#163B5C] 
+            transition-all"
           >
             Agendar avaliação
             <img
@@ -494,9 +494,10 @@ export default function Hero() {
 
         {/* CONTEÚDO */}
         <div className="relative max-w-[900px] mx-auto text-center text-white">
+          
           {/* TÍTULO */}
           <h2 className="text-4xl md:text-5xl font-extrabold">
-            Solicite um <span className="text-[#CDE6C1]">agendamento</span>
+            Solicite um <span className="text-[#6FAFE3]">agendamento</span>
           </h2>
 
           <p className="text-lg md:text-xl opacity-90 mt-3 mb-10">
@@ -516,7 +517,7 @@ export default function Hero() {
                 key={index}
                 className="flex items-center gap-3 text-lg md:text-xl font-light"
               >
-                <span className="text-[#CDE6C1] text-2xl leading-none">✔</span>
+                <span className="text-[#6FAFE3] text-2xl leading-none">✔</span>
                 <span>{item}</span>
               </div>
             ))}
@@ -526,8 +527,8 @@ export default function Hero() {
           <a
             href="#"
             target="_blank"
-            className="inline-flex items-center gap-3 bg-[#43523D] text-white font-semibold 
-          px-12 py-5 rounded-xl shadow-xl text-lg hover:bg-[#2f3d2b] transition-all"
+            className="inline-flex items-center gap-3 bg-[#1F4E79] text-white font-semibold 
+            px-12 py-5 rounded-xl shadow-xl text-lg hover:bg-[#163B5C] transition-all"
           >
             Agendar pelo WhatsApp
             <img
@@ -540,119 +541,120 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO 6 — DEPOIMENTOS ===== */}
-<section className="bg-[#F4EFE7] py-20 px-6">
-  <div className="max-w-[1200px] mx-auto text-center mb-12">
-    <h2 className="text-4xl md:text-5xl font-extrabold text-[#43523D]">
-      O que dizem <span className="text-[#6F7F5F]">os pacientes</span>
-    </h2>
-    <p className="text-[#6F7F5F] text-lg mt-2">
-      Feedbacks reais de pessoas que já passaram pelo tratamento
-    </p>
-  </div>
+      <section className="bg-[#F8FAFC] py-20 px-6">
+        <div className="max-w-[1200px] mx-auto text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
+            O que dizem <span className="text-[#2F6DA6]">os pacientes</span>
+          </h2>
+          <p className="text-[#2F6DA6] text-lg mt-2">
+            Feedbacks reais de pessoas que já passaram pelo tratamento
+          </p>
+        </div>
 
-  {/** CARDS POR TELA */}
-  <div className="relative max-w-[1200px] mx-auto">
+        {/* CARDS POR TELA */}
+        <div className="relative max-w-[1200px] mx-auto">
 
-    <div className="overflow-hidden rounded-xl">
-      <div
-        className="flex transition-transform duration-500"
-        style={{
-          transform: `translateX(-${slide * (100 / visibleCards)}%)`,
-        }}
-      >
-        {extended.map((t, i) => (
-          <div
-            key={i}
-            className="px-4 flex-shrink-0"
-            style={{
-              width:
-                visibleCards === 1
-                  ? "100%"
-                  : visibleCards === 2
-                  ? "50%"
-                  : "33.3333%",
-            }}
-          >
-            <div className="bg-white rounded-3xl shadow-xl border p-6 h-full flex flex-col">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-full bg-[#43523D] text-white flex items-center justify-center text-lg font-bold">
-                  {t.name
-                    .split(" ")
-                    .map((p) => p[0])
-                    .join("")
-                    .toUpperCase()}
+          <div className="overflow-hidden rounded-xl">
+            <div
+              className="flex transition-transform duration-500"
+              style={{
+                transform: `translateX(-${slide * (100 / visibleCards)}%)`,
+              }}
+            >
+              {extended.map((t, i) => (
+                <div
+                  key={i}
+                  className="px-4 flex-shrink-0"
+                  style={{
+                    width:
+                      visibleCards === 1
+                        ? "100%"
+                        : visibleCards === 2
+                        ? "50%"
+                        : "33.3333%",
+                  }}
+                >
+                  <div className="bg-white rounded-3xl shadow-xl border border-[#E2E8F0] p-6 h-full flex flex-col">
+                    
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 rounded-full bg-[#1F4E79] text-white flex items-center justify-center text-lg font-bold">
+                        {t.name
+                          .split(" ")
+                          .map((p) => p[0])
+                          .join("")
+                          .toUpperCase()}
+                      </div>
+                    </div>
+
+                    <p className="font-semibold text-[#1F4E79]">{t.name}</p>
+
+                    <div className="flex gap-1 my-2">
+                      {Array.from({ length: t.stars }).map((_, s) => (
+                        <img
+                          key={s}
+                          src="https://img.icons8.com/?size=100&id=8ggStxqyboK5&format=png&color=E0C22B"
+                          className="w-5 h-5"
+                        />
+                      ))}
+                    </div>
+
+                    <p className="text-[#1E293B] text-sm leading-relaxed">
+                      {t.text}
+                    </p>
+
+                  </div>
                 </div>
-              </div>
-
-              <p className="font-semibold text-[#43523D]">{t.name}</p>
-
-              <div className="flex gap-1 my-2">
-                {Array.from({ length: t.stars }).map((_, s) => (
-                  <img
-                    key={s}
-                    src="https://img.icons8.com/?size=100&id=8ggStxqyboK5&format=png&color=E0C22B"
-                    className="w-5 h-5"
-                  />
-                ))}
-              </div>
-
-              <p className="text-[#2B2B2B] text-sm leading-relaxed">
-                {t.text}
-              </p>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
-    </div>
 
-    {/* SETA ESQUERDA */}
-    <button
-      onClick={prevSlide}
-      className="
-        absolute top-1/2 left-2 md:-left-10
-        -translate-y-1/2 bg-white shadow-md rounded-full
-        p-2 md:p-3 hover:scale-110 transition z-10
-      "
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-5 h-5 text-[#43523D]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
+          {/* SETA ESQUERDA */}
+          <button
+            onClick={prevSlide}
+            className="
+              absolute top-1/2 left-2 md:-left-10
+              -translate-y-1/2 bg-white shadow-md rounded-full
+              p-2 md:p-3 hover:scale-110 transition z-10
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5 text-[#1F4E79]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
 
-    {/* SETA DIREITA */}
-    <button
-      onClick={nextSlide}
-      className="
-        absolute top-1/2 right-2 md:-right-10
-        -translate-y-1/2 bg-white shadow-md rounded-full
-        p-2 md:p-3 hover:scale-110 transition z-10
-      "
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-5 h-5 text-[#43523D]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-      </svg>
-    </button>
+          {/* SETA DIREITA */}
+          <button
+            onClick={nextSlide}
+            className="
+              absolute top-1/2 right-2 md:-right-10
+              -translate-y-1/2 bg-white shadow-md rounded-full
+              p-2 md:p-3 hover:scale-110 transition z-10
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5 text-[#1F4E79]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
 
-  </div>
-</section>
-
+        </div>
+      </section>
 
       {/* ===== SEÇÃO — MÉTRICAS ===== */}
-      <section className="w-full bg-[#43523D] py-20 text-white">
+      <section className="w-full bg-[#1F4E79] py-20 text-white">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 text-center gap-10 px-6">
 
           {/* CARD 1 */}
@@ -675,6 +677,7 @@ export default function Hero() {
 
         </div>
       </section>
+
       
       {/* ===== SEÇÃO — FAQ ===== */}
       <section id="faq" className="bg-[#F4EFE7] py-20 px-6">
@@ -742,42 +745,38 @@ export default function Hero() {
         </div>
       </section>
 
-
-
       {/* ===== SEÇÃO — ONDE NOS ENCONTRAR? ===== */}
-      <section className="bg-[#F4EFE7] pt-24 pb-12 px-6">
-
+      <section className="bg-[#F8FAFC] pt-24 pb-12 px-6">
         <div className="max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
           {/* COLUNA ESQUERDA — TEXTO */}
           <div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#43523D] mb-10">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79] mb-10">
               Onde nos encontrar?
             </h2>
 
-            <div className="flex flex-col gap-6 text-lg text-[#43523D]">
+            <div className="flex flex-col gap-6 text-lg text-[#1F4E79]">
 
               {/* WHATSAPP */}
               <p className="flex items-center gap-3">
-                <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=43523D" className="w-6" />
+                <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=1F4E79" className="w-6" />
                 (81) 99151-2002
               </p>
 
               {/* INSTAGRAM */}
               <p className="flex items-center gap-3">
-                <img src="https://img.icons8.com/?size=100&id=32292&format=png&color=43523D" className="w-6" />
+                <img src="https://img.icons8.com/?size=100&id=32292&format=png&color=1F4E79" className="w-6" />
                 @fisioglaucefonseca
               </p>
 
               {/* EMAIL */}
               <p className="flex items-center gap-3">
-                <img src="https://img.icons8.com/?size=100&id=53388&format=png&color=43523D" className="w-6" />
+                <img src="https://img.icons8.com/?size=100&id=53388&format=png&color=1F4E79" className="w-6" />
                 contato@clinicafisioterapia.com.br
               </p>
 
               {/* ENDEREÇO */}
               <p className="flex items-center gap-3">
-                <img src="https://img.icons8.com/?size=100&id=59817&format=png&color=43523D" className="w-6" />
+                <img src="https://img.icons8.com/?size=100&id=59817&format=png&color=1F4E79" className="w-6" />
                 R. José Nunes da Cunha, 5000 – Candeias, Jaboatão dos Guararapes – PE, 54440-030
               </p>
 
@@ -797,24 +796,25 @@ export default function Hero() {
 
         </div>
       </section>
-
       
       {/* ===== RODAPÉ ===== */}
       <section
         id="footer"
-        className="bg-[#1F2A1D] text-gray-300 py-12 px-6"
+        className="bg-[#0D1B2A] text-gray-300 py-12 px-6"
       >
-        <div className="
-          max-w-[1200px] mx-auto 
-          flex flex-col md:flex-row 
-          justify-between 
-          items-start 
-          gap-12
-        ">
+        <div
+          className="
+            max-w-[1200px] mx-auto 
+            flex flex-col md:flex-row 
+            justify-between 
+            items-start 
+            gap-12
+          "
+        >
 
           {/* ==== COLUNA ESQUERDA ==== */}
           <div>
-            <h3 className="text-2xl font-extrabold text-[#CDE6C1]">
+            <h3 className="text-2xl font-extrabold text-[#6FAFE3]">
               Mirella Letícia
             </h3>
 
@@ -833,7 +833,7 @@ export default function Hero() {
 
           {/* ==== NAVEGAÇÃO ==== */}
           <div className="md:text-right w-full md:w-auto ml-auto">
-            <h4 className="font-semibold text-[#CDE6C1] text-md mb-3">
+            <h4 className="font-semibold text-[#6FAFE3] text-md mb-3">
               Navegação
             </h4>
 
@@ -856,6 +856,7 @@ export default function Hero() {
           © {new Date().getFullYear()} Mirella Letícia — Todos os direitos reservados.
         </div>
       </section>
+
 
       {/* WHATSAPP FIXO */}
       <a
