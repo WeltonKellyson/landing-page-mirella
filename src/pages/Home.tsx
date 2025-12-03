@@ -1,4 +1,4 @@
-import mirella from '../assets/mirella.jpeg';
+import mirella from '../assets/teste.png';
 import logo from '../assets/logo.png';
 import aparelho1 from '../assets/aparelho1.png';
 import fundo1 from '../assets/fundo1.png';
@@ -219,7 +219,7 @@ export default function Hero() {
     <>
     {/* ===== SEÇÃO 1 ===== */}
       <section className="bg-[#F8FAFC] w-full">
-        <div className="max-w-[1500px] mx-auto px-6 md:px-16 lg:px-24 xl:px-32 min-h-[85vh] flex items-center pt-10 pb-16">
+        <div className="max-w-[1500px] mx-auto px-6 md:px-16 lg:px-24 xl:px-32 min-h-[85vh] flex items-center pb-10">
           <div className="flex flex-col md:flex-row items-center justify-between w-full gap-12">
             
             {/* ===== TEXTO ===== */}
@@ -227,9 +227,16 @@ export default function Hero() {
 
               {/* LOGO */}
               <img 
-                src={logo} 
-                alt="Logo Mirella" 
-                className="w-40 mx-auto md:mx-0 mb-2"
+                src={logo}
+                alt="Logo Mirella"
+                className="
+                  w-40 
+                  mx-auto           /* CENTRALIZA NO MOBILE */
+                  md:mx-0           /* REMOVE centralização no desktop */
+                  md:ml-[-25px]     /* SÓ no desktop aplica a margem negativa */
+                  mb-2 md:mb-4
+                "
+                style={{ objectFit: "contain" }}
               />
 
               <h1 className="
@@ -251,8 +258,8 @@ export default function Hero() {
               </p>
 
 
-              {/* LISTA EM 2 COLUNAS */}
-              <div className="grid grid-cols-2 gap-x-8 gap-y-2 mt-4 max-w-[550px]">
+              {/* LISTA EM 3 COLUNAS */}
+              <div className="grid grid-cols-3 gap-x-8 gap-y-2 mt-4 max-w-[550px]">
                 {[
                   'Reabilitação motora',
                   'Fortalecimento muscular',
@@ -261,7 +268,6 @@ export default function Hero() {
                   'Prevenção de quedas',
                   'Tratamento de dores',
                   'Estimulação precoce infantil',
-                  'Orientação a cuidadores',
                   'Reabilitação respiratória',
                   'Avaliação do paciente',
                 ].map((item, index) => (
@@ -277,36 +283,57 @@ export default function Hero() {
               <p className="text-[#D62828] font-semibold mt-1 text-sm md:text-base">
                 ✘ Não atendo planos de saúde
               </p>
-
-              {/* BOTÃO */}
-              <a
-                href="#"
-                target="_blank"
-                className="inline-flex items-center gap-2 bg-[#1F4E79] text-white font-semibold px-10 py-4 rounded-xl shadow-lg 
-                          hover:bg-[#163B5C] transition-all mt-2"
-              >
-                Agendar consulta
-                <img
-                  src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
-                  alt="WhatsApp ícone"
-                  className="w-5 h-5"
-                />
-              </a>
             </div>
 
             {/* ===== IMAGEM ===== */}
-            <div className="flex-1 flex justify-center md:justify-end pt-10 pb-10">
+            <div className="flex-1 flex justify-center md:justify-end pt-10 pb-10 relative">
+              {/* IMAGEM QUADRADA COM TOPO ARREDONDADO */}
               <img
                 src={mirella}
                 alt="Fisioterapeuta"
-                className="w-[95%] md:w-[80%] lg:w-[75%] xl:w-[65%] rounded-[50%] shadow-2xl object-cover"
+                className="
+                  relative z-10
+                  w-[95%] md:w-[80%] lg:w-[75%] xl:w-[70%]
+                  rounded-t-3xl           /* 🔥 arredonda só o topo */
+                  mt-16
+
+                "
               />
             </div>
           </div>
         </div>
 
+        {/* BOTÃO CENTRAL */}
+        <div className="text-center mb-10">
+          <a
+            href="#"
+            target="_blank"
+            className="
+              inline-flex items-center gap-3
+              bg-[#1F4E79] text-white font-semibold 
+              px-14 py-5 rounded-2xl shadow-xl
+
+              hover:bg-[#173f63] 
+              hover:shadow-[0_0_18px_rgba(31,78,121,0.5)]
+              hover:scale-[1.05]
+
+              transition-all duration-300 ease-out
+
+              animate-[pulse-custom_2.4s_ease-in-out_infinite]
+            "
+          >
+            Agendar avaliação
+
+            <img
+              src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
+              alt="WhatsApp"
+              className="w-6 h-6"
+            />
+          </a>
+        </div>
+
         {/* ===== SEÇÃO 2 — SERVIÇOS ===== */}
-        <div className="w-full bg-[#1F4E79] text-white py-14 px-6">
+        <div className="w-full bg-[#1F4E79] text-white py-10 px-6">
           <div className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-14 text-center">
 
             {/* CARD 1 */}
@@ -402,15 +429,26 @@ export default function Hero() {
           <a
             href="#"
             target="_blank"
-            className="inline-flex items-center gap-2 bg-[#1F4E79] text-white 
-            font-semibold px-10 py-4 rounded-xl shadow-lg hover:bg-[#163B5C] 
-            transition-all"
+            className="
+              inline-flex items-center gap-3
+              bg-[#1F4E79] text-white font-semibold 
+              px-14 py-5 rounded-2xl shadow-xl
+
+              hover:bg-[#173f63] 
+              hover:shadow-[0_0_18px_rgba(31,78,121,0.5)]
+              hover:scale-[1.05]
+
+              transition-all duration-300 ease-out
+
+              animate-[pulse-custom_2.4s_ease-in-out_infinite]
+            "
           >
             Agendar avaliação
+
             <img
-              src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
+              src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
               alt="WhatsApp"
-              className="w-5 h-5"
+              className="w-6 h-6"
             />
           </a>
         </div>
@@ -479,15 +517,26 @@ export default function Hero() {
           <a
             href="#"
             target="_blank"
-            className="inline-flex items-center gap-2 bg-[#1F4E79] text-white 
-            font-semibold px-10 py-4 rounded-xl shadow-lg hover:bg-[#163B5C] 
-            transition-all"
+            className="
+              inline-flex items-center gap-3
+              bg-[#1F4E79] text-white font-semibold 
+              px-14 py-5 rounded-2xl shadow-xl
+
+              hover:bg-[#173f63] 
+              hover:shadow-[0_0_18px_rgba(31,78,121,0.5)]
+              hover:scale-[1.05]
+
+              transition-all duration-300 ease-out
+
+              animate-[pulse-custom_2.4s_ease-in-out_infinite]
+            "
           >
             Agendar avaliação
+
             <img
-              src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
+              src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
               alt="WhatsApp"
-              className="w-5 h-5"
+              className="w-6 h-6"
             />
           </a>
         </div>
@@ -535,19 +584,33 @@ export default function Hero() {
           </div>
 
           {/* BOTÃO CENTRAL */}
-          <a
-            href="#"
-            target="_blank"
-            className="inline-flex items-center gap-3 bg-[#1F4E79] text-white font-semibold 
-            px-12 py-5 rounded-xl shadow-xl text-lg hover:bg-[#163B5C] transition-all"
-          >
-            Agendar pelo WhatsApp
-            <img
-              src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
-              alt="WhatsApp"
-              className="w-6 h-6"
-            />
-          </a>
+          <div className="text-center mt-14">
+            <a
+              href="#"
+              target="_blank"
+              className="
+                inline-flex items-center gap-3
+                bg-[#1F4E79] text-white font-semibold 
+                px-14 py-5 rounded-2xl shadow-xl
+
+                hover:bg-[#173f63] 
+                hover:shadow-[0_0_18px_rgba(31,78,121,0.5)]
+                hover:scale-[1.05]
+
+                transition-all duration-300 ease-out
+
+                animate-[pulse-custom_2.4s_ease-in-out_infinite]
+              "
+            >
+              Agendar avaliação
+
+              <img
+                src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
+                alt="WhatsApp"
+                className="w-6 h-6"
+              />
+            </a>
+          </div>
         </div>
       </section>
 
@@ -770,19 +833,19 @@ export default function Hero() {
               {/* WHATSAPP */}
               <p className="flex items-center gap-3">
                 <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=1F4E79" className="w-6" />
-                (81) 99151-2002
+                (81) 99157-5469
               </p>
 
               {/* INSTAGRAM */}
               <p className="flex items-center gap-3">
                 <img src="https://img.icons8.com/?size=100&id=32292&format=png&color=1F4E79" className="w-6" />
-                @fisioglaucefonseca
+                @mirellaalbuquerque_20
               </p>
 
               {/* EMAIL */}
               <p className="flex items-center gap-3">
                 <img src="https://img.icons8.com/?size=100&id=53388&format=png&color=1F4E79" className="w-6" />
-                contato@clinicafisioterapia.com.br
+                mirellaleticiaalbuquerque@gmail.com
               </p>
 
               {/* ENDEREÇO */}
@@ -838,7 +901,14 @@ export default function Hero() {
             <div className="flex items-center gap-6 mt-4 text-sm text-gray-400">
               <span className="flex items-center gap-1">🔒 Seguro</span>
               <span className="flex items-center gap-1">🇧🇷 Atendimento local</span>
-              <span className="flex items-center gap-1">💬 WhatsApp</span>
+             <span className="flex items-center gap-1">
+              <img 
+                src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
+                alt="WhatsApp"
+                className="w-4 h-4"
+              />
+              WhatsApp
+            </span>
             </div>
           </div>
 
@@ -864,7 +934,7 @@ export default function Hero() {
 
         {/* COPYRIGHT */}
         <div className="max-w-[1200px] mx-auto mt-8 pt-4 border-t border-gray-700 text-center text-gray-500 text-xs">
-          © {new Date().getFullYear()} Mirella Letícia — Todos os direitos reservados.
+          © {new Date().getFullYear()} We_Tech — Todos os direitos reservados.
         </div>
       </section>
 
