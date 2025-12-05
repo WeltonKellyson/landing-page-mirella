@@ -191,31 +191,54 @@ export default function Hero() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const extended = [
+  const extendedSlides = [
     ...testimonials.slice(-visibleCards),
     ...testimonials,
     ...testimonials.slice(0, visibleCards),
   ];
 
-  const [slide, setSlide] = useState(visibleCards);
-  const total = extended.length;
+  const [currentIndex, setCurrentIndex] = useState(visibleCards);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isAdjusting, setIsAdjusting] = useState(false);
+  const step = 100 / visibleCards;
+
+  const jumpTo = (index: number) => {
+    setIsAdjusting(true);
+    setIsTransitioning(false);
+    setCurrentIndex(index);
+    requestAnimationFrame(() => setIsTransitioning(true));
+    requestAnimationFrame(() => setIsAdjusting(false));
+  };
 
   useEffect(() => {
-    if (slide === 0) {
-      setTimeout(() => {
-        setSlide(testimonials.length);
-      }, 500);
-    }
+    jumpTo(visibleCards);
+  }, [visibleCards]);
 
-    if (slide === testimonials.length + visibleCards) {
-      setTimeout(() => {
-        setSlide(visibleCards);
-      }, 500);
-    }
-  }, [slide]);
+  useEffect(() => {
+    if (isAdjusting) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => prev + 1);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [visibleCards, isAdjusting]);
 
-  const nextSlide = () => setSlide((prev) => prev + 1);
-  const prevSlide = () => setSlide((prev) => prev - 1);
+  const handleNext = () => {
+    if (isAdjusting) return;
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  const handlePrev = () => {
+    if (isAdjusting) return;
+    setCurrentIndex((prev) => prev - 1);
+  };
+
+  const onTransitionEnd = () => {
+    if (currentIndex <= 0) {
+      jumpTo(testimonials.length);
+    } else if (currentIndex >= testimonials.length + visibleCards) {
+      jumpTo(visibleCards);
+    }
+  };
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -592,15 +615,16 @@ export default function Hero() {
 
           <div className="overflow-hidden rounded-xl">
             <div
-              className="flex transition-transform duration-500"
+              className={`flex ${isTransitioning ? "transition-transform duration-500" : ""}`}
+              onTransitionEnd={onTransitionEnd}
               style={{
-                transform: `translateX(-${slide * (100 / visibleCards)}%)`,
+                transform: `translateX(-${currentIndex * step}%)`,
               }}
             >
-              {extended.map((t, i) => (
+              {extendedSlides.map((t, i) => (
                 <div
                   key={i}
-                  className="px-4 flex-shrink-0"
+                  className="flex-shrink-0 box-border px-4"
                   style={{
                     width:
                       visibleCards === 1
@@ -646,7 +670,7 @@ export default function Hero() {
 
           {/* SETA ESQUERDA */}
           <button
-            onClick={prevSlide}
+            onClick={handlePrev}
             className="
               absolute top-1/2 left-2 md:-left-10
               -translate-y-1/2 bg-white shadow-md rounded-full
@@ -667,7 +691,7 @@ export default function Hero() {
 
           {/* SETA DIREITA */}
           <button
-            onClick={nextSlide}
+            onClick={handleNext}
             className="
               absolute top-1/2 right-2 md:-right-10
               -translate-y-1/2 bg-white shadow-md rounded-full
