@@ -370,18 +370,15 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: subtitleDelay, duration: 0.45, ease: "easeOut" }}
                 className="
-                  inline-flex items-center gap-2
+                  inline-flex flex-wrap items-center justify-center gap-2
                   px-5 py-3 rounded-full
                   bg-white/70 backdrop-blur-sm border border-white/30
                   text-[#1F4E79] text-lg md:text-xl font-semibold shadow-sm
+                  text-center
                 "
               >
                 <span className="bg-gradient-to-r from-[#1F4E79] to-[#6FAFE3] bg-clip-text text-transparent">
-                  Fisioterapia domiciliar e particular
-                </span>
-                <span className="hidden sm:inline text-[#1F4E79]/70">•</span>
-                <span className="text-[#1F4E79] font-semibold">
-                  em Recife-PE
+                  Fisioterapia domiciliar e particular em Recife e região
                 </span>
               </motion.div>
             </div>
