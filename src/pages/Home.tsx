@@ -216,20 +216,24 @@ export default function Hero() {
   const nameDelayPerLetter = 0.04;
   const nameTypingDuration = name.length * nameDelayPerLetter;
   const subtitleDelay = nameTypingDuration + 0.3;
+  // Dados das métricas usadas no contador animado
   const metrics = [
-    { label: "Pacientes atendidos", value: 500, suffix: "", duration: 2.2 },
-    { label: "Anos de experiência", value: 6, suffix: "", duration: 1.6 },
+    { label: "Pacientes atendidos", value: 200, suffix: "", duration: 2.2 },
+    { label: "Anos de experiência", value: 3, suffix: "", duration: 1.6 },
     { label: "Pacientes satisfeitos", value: 100, suffix: "%", duration: 1.8 },
   ];
   // Número de cards por vez → responsivo
+  // Responsividade do carrossel de depoimentos (quantidade de cards por tela)
   const getCardsPerView = () => {
     if (window.innerWidth < 640) return 1;     // Mobile
     if (window.innerWidth < 1024) return 2;    // Tablet
     return 3;                                  // Desktop
   };
 
+  // Estado do carrossel de depoimentos
   const [visibleCards, setVisibleCards] = useState(getCardsPerView());
 
+  // Avanço automático do carrossel (pausa em hover)
   useEffect(() => {
     const handleResize = () => {
       setVisibleCards(getCardsPerView());
@@ -239,12 +243,14 @@ export default function Hero() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Slides estendidos para permitir loop infinito no carrossel
   const extendedSlides = [
     ...testimonials.slice(-visibleCards),
     ...testimonials,
     ...testimonials.slice(0, visibleCards),
   ];
 
+  // Estado do carrossel de depoimentos
   const [currentIndex, setCurrentIndex] = useState(visibleCards);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isAdjusting, setIsAdjusting] = useState(false);
@@ -281,6 +287,7 @@ export default function Hero() {
     setCurrentIndex((prev) => prev - 1);
   };
 
+  // Corrige laço infinito do carrossel, saltando para a posição correta
   const onTransitionEnd = () => {
     if (currentIndex <= 0) {
       jumpTo(testimonials.length);
@@ -288,7 +295,7 @@ export default function Hero() {
       jumpTo(visibleCards);
     }
   };
-
+  // Estado do FAQ (qual item está aberto)
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { ref: servicesRef, inView: servicesInView } = useInView({
     triggerOnce: true,
@@ -306,7 +313,20 @@ export default function Hero() {
     triggerOnce: true,
     threshold: 0.35,
   });
-  const [mapSelection, setMapSelection] = useState<"recife" | "jaboatao" | "olinda" | "camaragibe">("recife");
+  // const [mapSelection, setMapSelection] = useState<"recife" | "jaboatao" | "olinda" | "camaragibe">("recife");
+  // Auto-rotate mapa (desativado; ative se quiser ciclo automático de regiões)
+  // const mapOrder: Array<"recife" | "jaboatao" | "olinda" | "camaragibe"> = ["recife", "jaboatao", "olinda", "camaragibe"];
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setMapSelection((prev) => {
+  //       const currentIndex = mapOrder.indexOf(prev);
+  //       const nextIndex = (currentIndex + 1) % mapOrder.length;
+  //       return mapOrder[nextIndex];
+  //     });
+  //   }, 3000);
+  //   return () => clearInterval(interval);
+  // }, []);
+  const mapSelection = "recife";
   const avatarPalettes = [
     "linear-gradient(135deg, #1F4E79, #6FAFE3)",
     "linear-gradient(135deg, #2F6DA6, #1F4E79)",
@@ -319,7 +339,7 @@ export default function Hero() {
   return (
     <>
     <style>{`html { scroll-behavior: smooth; }`}</style>
-    {/* ===== SEÇÃO 1 ===== */}
+    {/* ===== SEÇÃO 1 — HERO ===== */}
       <section
         id="hero"
         className="relative w-full overflow-x-hidden bg-cover bg-center bg-no-repeat"
@@ -934,7 +954,7 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* ===== SEÇÃO - MÉTRICAS ===== */}
+      {/* ===== SEÇÃO — MÉTRICAS ===== */}
       <section ref={metricsRef} className="w-full bg-gradient-to-r from-[#1F4E79] via-[#194268] to-[#0F2B46] py-20 text-white overflow-x-hidden">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 text-center gap-10 px-6">
 
@@ -963,7 +983,7 @@ export default function Hero() {
       </section>
 
       
-      {/* ===== SEÇÃO - FAQ ===== */}
+      {/* ===== SEÇÃO — FAQ ===== */}
       <section
         id="faq"
         className="relative bg-gradient-to-b from-[#F8FAFC] via-white to-[#F0F6FF] py-20 px-6 overflow-x-hidden"
@@ -1115,40 +1135,15 @@ export default function Hero() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#E2E8F0]"
           >
-            {/* Controles e rótulos sem bloquear o clique do mapa */}
+            {/* Controles desativados */}
+            {/*
             <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10 pointer-events-none">
-              {[
-                { key: "recife", label: "Recife - PE", gradient: "from-[#1F4E79] to-[#6FAFE3]" },
-                { key: "jaboatao", label: "Jaboatão dos Guararapes - PE", gradient: "from-[#6FAFE3] to-[#1F4E79]" },
-                { key: "olinda", label: "Olinda - PE", gradient: "from-[#1F4E79] to-[#2F6DA6]" },
-                { key: "camaragibe", label: "Camaragibe - PE", gradient: "from-[#2F6DA6] to-[#6FAFE3]" },
-              ].map((opt) => (
-                <button
-                  key={opt.key}
-                  type="button"
-                  onClick={() => setMapSelection(opt.key as typeof mapSelection)}
-                  className={`pointer-events-auto inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold shadow-sm border whitespace-nowrap justify-end ${
-                    mapSelection === opt.key
-                      ? "bg-white text-[#1F4E79] border-white"
-                      : "bg-white/85 text-[#1F4E79] border-white/70"
-                  }`}
-                >
-                  <span className={`w-3 h-3 rounded-full bg-gradient-to-br ${opt.gradient}`} />
-                  {opt.label}
-                </button>
-              ))}
+              {[...].map(...buttons...)}
             </div>
+            */}
             <iframe
               key={mapSelection}
-              src={
-                mapSelection === "recife"
-                  ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d197155.99912305336!2d-35.102!3d-8.152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f10.5!3m3!1m2!1s0x7ab18a3d3c7b6f3%3A0x917f4bd074a8d6f8!2sRecife%20-%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000004!5m2!1spt-BR!2sbr"
-                  : mapSelection === "jaboatao"
-                  ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d78825.30859007223!2d-34.974!3d-8.168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1c1fc53e1f3d%3A0xa30258aab6fa410b!2sJaboat%C3%A3o%20dos%20Guararapes%2C%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000006!5m2!1spt-BR!2sbr"
-                  : mapSelection === "olinda"
-                  ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d78877.39118830633!2d-34.927!3d-7.999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1e3047f3ad4b%3A0x6e28d1e2d2866c1!2sOlinda%2C%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000007!5m2!1spt-BR!2sbr"
-                  : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d78884.04863187954!2d-35.061!3d-8.033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1859955b6e21%3A0x7cd86b1054306209!2sCamaragibe%2C%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000008!5m2!1spt-BR!2sbr"
-              }
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d197155.99912305336!2d-35.102!3d-8.152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f10.5!3m3!1m2!1s0x7ab18a3d3c7b6f3%3A0x917f4bd074a8d6f8!2sRecife%20-%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000004!5m2!1spt-BR!2sbr"
               width="100%"
               height="350"
               allowFullScreen={true}
