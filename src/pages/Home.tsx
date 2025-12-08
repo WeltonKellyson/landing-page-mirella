@@ -17,6 +17,40 @@ import img5 from '../assets/img5.jpeg';
 import img6 from '../assets/img6.jpeg';
 import img7 from '../assets/img7.jpeg';
 import img8 from '../assets/img8.jpeg';
+import React from "react";
+
+type CounterProps = {
+  end: number;
+  duration?: number;
+  prefix?: string;
+  suffix?: string;
+};
+
+function Counter({ end, duration = 2, prefix = "", suffix = "" }: CounterProps) {
+  const [value, setValue] = React.useState(0);
+
+  React.useEffect(() => {
+    let frame: number;
+    const start = performance.now();
+    const animate = (time: number) => {
+      const progress = Math.min((time - start) / (duration * 1000), 1);
+      setValue(Math.floor(progress * end));
+      if (progress < 1) {
+        frame = requestAnimationFrame(animate);
+      }
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [end, duration]);
+
+  return (
+    <>
+      {prefix}
+      {value.toLocaleString("pt-BR")}
+      {suffix}
+    </>
+  );
+}
 
 
 const testimonials = [
@@ -177,6 +211,11 @@ export default function Hero() {
   const nameDelayPerLetter = 0.04;
   const nameTypingDuration = name.length * nameDelayPerLetter;
   const subtitleDelay = nameTypingDuration + 0.3;
+  const metrics = [
+    { label: "Pacientes atendidos", value: 500, suffix: "", duration: 2.2 },
+    { label: "Anos de experiência", value: 6, suffix: "", duration: 1.6 },
+    { label: "Pacientes satisfeitos", value: 100, suffix: "%", duration: 1.8 },
+  ];
   // Número de cards por vez → responsivo
   const getCardsPerView = () => {
     if (window.innerWidth < 640) return 1;     // Mobile
@@ -204,6 +243,7 @@ export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(visibleCards);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isAdjusting, setIsAdjusting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const step = 100 / visibleCards;
 
   const jumpTo = (index: number) => {
@@ -219,12 +259,12 @@ export default function Hero() {
   }, [visibleCards]);
 
   useEffect(() => {
-    if (isAdjusting) return;
+    if (isAdjusting || isPaused) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => prev + 1);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(interval);
-  }, [visibleCards, isAdjusting]);
+  }, [visibleCards, isAdjusting, isPaused]);
 
   const handleNext = () => {
     if (isAdjusting) return;
@@ -257,6 +297,14 @@ export default function Hero() {
     triggerOnce: true,
     threshold: 0.15,
   });
+  const avatarPalettes = [
+    "linear-gradient(135deg, #1F4E79, #6FAFE3)",
+    "linear-gradient(135deg, #2F6DA6, #1F4E79)",
+    "linear-gradient(135deg, #173f63, #2F6DA6)",
+    "linear-gradient(135deg, #285F97, #6FAFE3)",
+  ];
+  const baseSlides = testimonials.length;
+  const activeSlide = ((currentIndex - visibleCards) % baseSlides + baseSlides) % baseSlides;
 
   return (
     <>
@@ -440,7 +488,7 @@ export default function Hero() {
 
 
       {/* ===== SEÇÃO 3 — DOENÇAS E TRATAMENTOS ===== */}
-      <section className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
+      <section className="bg-gradient-to-b from-[#F8FAFC] via-white to-[#F0F6FF] py-20 px-6 overflow-x-hidden">
         <div className="max-w-[1400px] mx-auto text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             Doenças e <span className="text-[#2F6DA6]">Tratamentos</span>
@@ -635,37 +683,58 @@ export default function Hero() {
           backgroundImage: `url(${fundo1})`,
         }}
       >
-        {/* CAMADA ESCURA LEVE */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        {/* CAMADA CLARA ELEGANTE SOBRE A FOTO */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/75 via-white/65 to-white/40 backdrop-blur-[2px]" />
 
         {/* CONTEÚDO */}
-        <div className="relative max-w-[900px] mx-auto text-center text-white">
+        <div className="relative max-w-[900px] mx-auto text-center text-[#0F2B46]">
           
           {/* TÍTULO */}
-          <h2 className="text-4xl md:text-5xl font-extrabold">
-            Solicite um <span className="text-[#6FAFE3]">agendamento</span>
-          </h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-4xl md:text-5xl font-extrabold"
+          >
+            Solicite um{" "}
+            <span className="bg-gradient-to-r from-[#1F4E79] via-[#2F6DA6] to-[#6FAFE3] bg-clip-text text-transparent">
+              agendamento
+            </span>
+          </motion.h2>
 
-          <p className="text-lg md:text-xl opacity-90 mt-3 mb-10">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            className="text-lg md:text-xl text-[#1F4E79] mt-3 mb-10"
+          >
             Atendimento humanizado e focado na sua evolução
-          </p>
+          </motion.p>
 
           {/* LISTA — UMA COLUNA CENTRALIZADA */}
           <div className="flex flex-col items-center gap-4 mb-12">
             {[
-              'Excelente localização em Recife-PE',
-              'Atendimento profissional e humanizado',
-              'Especializada em fisioterapia domiciliar',
-              'Acompanhamento contínuo da evolução',
-              'Tratamentos personalizados para cada paciente',
+              "Excelente localização em Recife-PE",
+              "Atendimento profissional e humanizado",
+              "Especializada em fisioterapia domiciliar",
+              "Acompanhamento contínuo da evolução",
+              "Tratamentos personalizados para cada paciente",
             ].map((item, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="flex items-center gap-3 text-lg md:text-xl font-light"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.45, delay: 0.15 + index * 0.1, ease: "easeOut" }}
+                className="flex items-center gap-3 text-lg md:text-xl font-medium text-[#12365A] bg-white/70 px-4 py-2 rounded-full shadow-sm border border-white/50"
               >
-                <span className="text-[#6FAFE3] text-2xl leading-none">✔</span>
-                <span>{item}</span>
-              </div>
+                <span className="flex items-center justify-center w-8 h-8 min-w-8 min-h-8 rounded-full bg-gradient-to-br from-[#1F4E79] to-[#6FAFE3] text-white text-base shadow-md flex-shrink-0">
+                  ✔
+                </span>
+                <span className="text-[#0F2B46]">{item}</span>
+              </motion.div>
             ))}
           </div>
 
@@ -716,7 +785,11 @@ export default function Hero() {
         </div>
 
         {/* CARDS POR TELA */}
-        <div className="relative max-w-[1200px] mx-auto">
+        <div
+          className="relative max-w-[1200px] mx-auto"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
 
           <div className="overflow-hidden rounded-xl">
             <div
@@ -739,10 +812,13 @@ export default function Hero() {
                         : "33.3333%",
                   }}
                 >
-                  <div className="bg-white rounded-3xl shadow-xl border border-[#E2E8F0] p-6 h-full flex flex-col">
+                  <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 h-full flex flex-col transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
                     
                     <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 rounded-full bg-[#1F4E79] text-white flex items-center justify-center text-lg font-bold">
+                      <div
+                        className="w-12 h-12 rounded-full text-white flex items-center justify-center text-lg font-bold shadow-md"
+                        style={{ background: avatarPalettes[i % avatarPalettes.length] }}
+                      >
                         {t.name
                           .split(" ")
                           .map((p) => p[0])
@@ -815,30 +891,43 @@ export default function Hero() {
             </svg>
           </button>
 
+          {/* INDICADORES */}
+          <div className="flex justify-center gap-2 mt-8">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx + visibleCards)}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  activeSlide === idx
+                    ? "w-6 bg-[#1F4E79]"
+                    : "w-2.5 bg-[#94A3B8]"
+                }`}
+                aria-label={`Ir para depoimento ${idx + 1}`}
+              />
+            ))}
+          </div>
+
         </div>
       </section>
 
-      {/* ===== SEÇÃO — MÉTRICAS ===== */}
+      {/* ===== SEÇÃO - MÉTRICAS ===== */}
       <section className="w-full bg-[#1F4E79] py-20 text-white overflow-x-hidden">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 text-center gap-10 px-6">
 
-          {/* CARD 1 */}
-          <div>
-            <p className="text-6xl font-extrabold">+500</p>
-            <p className="text-lg mt-2 opacity-90">Pacientes atendidos</p>
-          </div>
-
-          {/* CARD 2 */}
-          <div>
-            <p className="text-6xl font-extrabold">+6</p>
-            <p className="text-lg mt-2 opacity-90">Anos de experiência</p>
-          </div>
-
-          {/* CARD 3 */}
-          <div>
-            <p className="text-6xl font-extrabold">100%</p>
-            <p className="text-lg mt-2 opacity-90">Pacientes satisfeitos</p>
-          </div>
+          {metrics.map((m, idx) => (
+            <div key={idx} className="flex flex-col items-center">
+              <motion.span
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.4, delay: idx * 0.15, ease: "easeOut" }}
+                className="text-6xl font-extrabold"
+              >
+                <Counter end={m.value} duration={m.duration} suffix={m.suffix} prefix={idx === 0 ? "+" : idx === 1 ? "+" : ""} />
+              </motion.span>
+              <p className="text-lg mt-2 opacity-90">{m.label}</p>
+            </div>
+          ))}
 
         </div>
       </section>
