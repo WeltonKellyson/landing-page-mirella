@@ -24,13 +24,18 @@ type CounterProps = {
   duration?: number;
   prefix?: string;
   suffix?: string;
+  run?: boolean;
 };
 
-function Counter({ end, duration = 2, prefix = "", suffix = "" }: CounterProps) {
+function Counter({ end, duration = 2, prefix = "", suffix = "", run = true }: CounterProps) {
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
     let frame: number;
+    if (!run) {
+      setValue(0);
+      return;
+    }
     const start = performance.now();
     const animate = (time: number) => {
       const progress = Math.min((time - start) / (duration * 1000), 1);
@@ -41,7 +46,7 @@ function Counter({ end, duration = 2, prefix = "", suffix = "" }: CounterProps) 
     };
     frame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frame);
-  }, [end, duration]);
+  }, [end, duration, run]);
 
   return (
     <>
@@ -297,6 +302,11 @@ export default function Hero() {
     triggerOnce: true,
     threshold: 0.15,
   });
+  const { ref: metricsRef, inView: metricsInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.35,
+  });
+  const [mapSelection, setMapSelection] = useState<"recife" | "jaboatao" | "olinda" | "camaragibe">("recife");
   const avatarPalettes = [
     "linear-gradient(135deg, #1F4E79, #6FAFE3)",
     "linear-gradient(135deg, #2F6DA6, #1F4E79)",
@@ -911,7 +921,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO - MÉTRICAS ===== */}
-      <section className="w-full bg-[#1F4E79] py-20 text-white overflow-x-hidden">
+      <section ref={metricsRef} className="w-full bg-[#1F4E79] py-20 text-white overflow-x-hidden">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 text-center gap-10 px-6">
 
           {metrics.map((m, idx) => (
@@ -923,7 +933,13 @@ export default function Hero() {
                 transition={{ duration: 0.4, delay: idx * 0.15, ease: "easeOut" }}
                 className="text-6xl font-extrabold"
               >
-                <Counter end={m.value} duration={m.duration} suffix={m.suffix} prefix={idx === 0 ? "+" : idx === 1 ? "+" : ""} />
+                <Counter
+                  end={m.value}
+                  duration={m.duration}
+                  suffix={m.suffix}
+                  prefix={idx === 0 ? "+" : idx === 1 ? "+" : ""}
+                  run={metricsInView}
+                />
               </motion.span>
               <p className="text-lg mt-2 opacity-90">{m.label}</p>
             </div>
@@ -933,9 +949,13 @@ export default function Hero() {
       </section>
 
       
-      {/* ===== SEÇÃO — FAQ ===== */}
-      <section id="faq" className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
-        <div className="max-w-[900px] mx-auto text-center mb-12">
+      {/* ===== SEÇÃO - FAQ ===== */}
+      <section
+        id="faq"
+        className="relative bg-gradient-to-b from-[#F8FAFC] via-white to-[#F0F6FF] py-20 px-6 overflow-x-hidden"
+      >
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(111,175,227,0.12),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(31,78,121,0.12),transparent_35%)]"></div>
+        <div className="relative max-w-[900px] mx-auto text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             Dúvidas <span className="text-[#2F6DA6]">frequentes</span>
           </h2>
@@ -945,7 +965,7 @@ export default function Hero() {
         </div>
 
         {/* LISTA DE FAQ */}
-        <div className="max-w-[900px] mx-auto space-y-4">
+        <div className="relative max-w-[900px] mx-auto space-y-4">
           {faqs.map((faq, index) => {
             const { ref, inView } = useInView({
               triggerOnce: true,
@@ -958,17 +978,18 @@ export default function Hero() {
                 ref={ref}
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className={`border border-gray-200 rounded-xl shadow-sm transition-all duration-300 ${
-                  openIndex === index ? "bg-white shadow-md" : "bg-white"
+                transition={{ duration: 0.5, delay: index * 0.12 }}
+                className={`relative border border-gray-200 rounded-2xl transition-all duration-300 overflow-hidden ${
+                  openIndex === index ? "bg-white shadow-xl" : "bg-white/95 shadow-md"
                 }`}
               >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition pointer-events-none bg-gradient-to-r from-[#6FAFE3]/10 via-white to-[#1F4E79]/5" />
                 {/* CABEÇALHO */}
                 <button
                   onClick={() =>
                     setOpenIndex(openIndex === index ? null : index)
                   }
-                  className="w-full flex justify-between items-center text-left px-6 py-5 font-semibold text-[#1F4E79] hover:bg-gray-50 rounded-xl transition"
+                  className="w-full flex justify-between items-center text-left px-6 py-5 font-semibold text-[#1F4E79] hover:bg-gray-50 rounded-2xl transition relative"
                 >
                   {faq.question}
 
@@ -989,9 +1010,14 @@ export default function Hero() {
 
                 {/* RESPOSTA */}
                 {openIndex === index && (
-                  <div className="px-6 pb-5 text-gray-600 border-t border-gray-100 leading-relaxed">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25 }}
+                    className="px-6 pb-5 text-gray-600 border-t border-gray-100 leading-relaxed bg-white"
+                  >
                     {faq.answer}
-                  </div>
+                  </motion.div>
                 )}
               </motion.div>
             );
@@ -1003,50 +1029,118 @@ export default function Hero() {
       <section className="bg-[#F8FAFC] pt-24 pb-12 px-6 overflow-x-hidden">
         <div className="max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* COLUNA ESQUERDA — TEXTO */}
-          <div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79] mb-10">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79] mb-6">
               Onde nos encontrar?
             </h2>
 
-            <div className="flex flex-col gap-6 text-lg text-[#1F4E79]">
+            <p className="text-lg text-[#1F4E79]/80 mb-6">
+              Fale direto pelo WhatsApp, visite nosso Instagram ou venha até nós.
+            </p>
+
+            <div className="flex flex-col gap-4 text-lg text-[#0F2B46]">
 
               {/* WHATSAPP */}
-              <p className="flex items-center gap-3">
-                <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=1F4E79" className="w-6" />
-                (81) 99157-5469
-              </p>
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.45, delay: 0.05 }}
+                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0]"
+              >
+                <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=1F4E79" className="w-7" />
+                <div>
+                  <p className="font-semibold text-[#1F4E79]">WhatsApp</p>
+                  <p className="text-[#0F2B46]">(81) 99157-5469</p>
+                </div>
+              </motion.div>
 
               {/* INSTAGRAM */}
-              <p className="flex items-center gap-3">
-                <img src="https://img.icons8.com/?size=100&id=32292&format=png&color=1F4E79" className="w-6" />
-                @mirellaalbuquerque_20
-              </p>
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.45, delay: 0.12 }}
+                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0]"
+              >
+                <img src="https://img.icons8.com/?size=100&id=32292&format=png&color=1F4E79" className="w-7" />
+                <div>
+                  <p className="font-semibold text-[#1F4E79]">Instagram</p>
+                  <p className="text-[#0F2B46]">@mirellaalbuquerque_20</p>
+                </div>
+              </motion.div>
 
               {/* EMAIL */}
-              <p className="flex items-center gap-3">
-                <img src="https://img.icons8.com/?size=100&id=53388&format=png&color=1F4E79" className="w-6" />
-                mirellaleticiaalbuquerque@gmail.com
-              </p>
-
-              {/* ENDEREÇO */}
-              <p className="flex items-center gap-3">
-                <img src="https://img.icons8.com/?size=100&id=59817&format=png&color=1F4E79" className="w-6" />
-                R. José Nunes da Cunha, 5000 – Candeias, Jaboatão dos Guararapes – PE, 54440-030
-              </p>
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.45, delay: 0.18 }}
+                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0]"
+              >
+                <img src="https://img.icons8.com/?size=100&id=53388&format=png&color=1F4E79" className="w-7" />
+                <div>
+                  <p className="font-semibold text-[#1F4E79]">E-mail</p>
+                  <p className="text-[#0F2B46]">mirellaleticiaalbuquerque@gmail.com</p>
+                </div>
+              </motion.div>
 
             </div>
-          </div>
+          </motion.div>
 
           {/* COLUNA DIREITA — MAPA */}
-          <div className="rounded-3xl overflow-hidden shadow-xl">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#E2E8F0]"
+          >
+            {/* Controles e rótulos sem bloquear o clique do mapa */}
+            <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10 pointer-events-none">
+              {[
+                { key: "recife", label: "Recife - PE", gradient: "from-[#1F4E79] to-[#6FAFE3]" },
+                { key: "jaboatao", label: "Jaboatão dos Guararapes - PE", gradient: "from-[#6FAFE3] to-[#1F4E79]" },
+                { key: "olinda", label: "Olinda - PE", gradient: "from-[#1F4E79] to-[#2F6DA6]" },
+                { key: "camaragibe", label: "Camaragibe - PE", gradient: "from-[#2F6DA6] to-[#6FAFE3]" },
+              ].map((opt) => (
+                <button
+                  key={opt.key}
+                  type="button"
+                  onClick={() => setMapSelection(opt.key as typeof mapSelection)}
+                  className={`pointer-events-auto inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold shadow-sm border whitespace-nowrap justify-end ${
+                    mapSelection === opt.key
+                      ? "bg-white text-[#1F4E79] border-white"
+                      : "bg-white/85 text-[#1F4E79] border-white/70"
+                  }`}
+                >
+                  <span className={`w-3 h-3 rounded-full bg-gradient-to-br ${opt.gradient}`} />
+                  {opt.label}
+                </button>
+              ))}
+            </div>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.0887019870914!2d-34.94036802591203!3d-8.18901308387623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1f2ee8c66a0d%3A0x7cf3943c08495c7d!2sR.%20Jos%C3%A9%20Nunes%20da%20Cunha%2C%205000%20-%20Candeias%2C%20Jaboat%C3%A3o%20dos%20Guararapes%20-%20PE%2C%2054440-030!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+              key={mapSelection}
+              src={
+                mapSelection === "recife"
+                  ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d197155.99912305336!2d-35.102!3d-8.152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f10.5!3m3!1m2!1s0x7ab18a3d3c7b6f3%3A0x917f4bd074a8d6f8!2sRecife%20-%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000004!5m2!1spt-BR!2sbr"
+                  : mapSelection === "jaboatao"
+                  ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d78825.30859007223!2d-34.974!3d-8.168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1c1fc53e1f3d%3A0xa30258aab6fa410b!2sJaboat%C3%A3o%20dos%20Guararapes%2C%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000006!5m2!1spt-BR!2sbr"
+                  : mapSelection === "olinda"
+                  ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d78877.39118830633!2d-34.927!3d-7.999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1e3047f3ad4b%3A0x6e28d1e2d2866c1!2sOlinda%2C%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000007!5m2!1spt-BR!2sbr"
+                  : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d78884.04863187954!2d-35.061!3d-8.033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1859955b6e21%3A0x7cd86b1054306209!2sCamaragibe%2C%20PE!5e0!3m2!1spt-BR!2sbr!4v1700000000008!5m2!1spt-BR!2sbr"
+              }
               width="100%"
               height="350"
               allowFullScreen={true}
               loading="lazy"
             ></iframe>
-          </div>
+          </motion.div>
 
         </div>
       </section>
