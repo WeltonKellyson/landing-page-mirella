@@ -320,6 +320,7 @@ export default function Hero() {
     <>
     {/* ===== SEÇÃO 1 ===== */}
       <section
+        id="hero"
         className="relative w-full overflow-x-hidden bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${fundo})` }}
       >
@@ -422,7 +423,7 @@ export default function Hero() {
         </div>
 
         {/* ===== SEÇÃO 2 — SERVIÇOS ===== */}
-        <div className="w-full bg-[#1F4E79] text-white py-10 px-6">
+        <div id="servicos" className="w-full bg-[#1F4E79] text-white py-10 px-6">
           <div
             ref={servicesRef}
             className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-14 text-center"
@@ -498,7 +499,7 @@ export default function Hero() {
 
 
       {/* ===== SEÇÃO 3 — DOENÇAS E TRATAMENTOS ===== */}
-      <section className="bg-gradient-to-b from-[#F8FAFC] via-white to-[#F0F6FF] py-20 px-6 overflow-x-hidden">
+      <section id="tratamentos" className="bg-gradient-to-b from-[#F8FAFC] via-white to-[#F0F6FF] py-20 px-6 overflow-x-hidden">
         <div className="max-w-[1400px] mx-auto text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             Doenças e <span className="text-[#2F6DA6]">Tratamentos</span>
@@ -589,7 +590,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO 4 — APRELHOS E RECURSOS ===== */}
-      <section className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
+      <section id="aparelhos" className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
         {/* TÍTULO */}
         <div className="max-w-[1400px] mx-auto text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
@@ -784,7 +785,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO 6 — DEPOIMENTOS ===== */}
-      <section className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
+      <section id="depoimentos" className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
         <div className="max-w-[1200px] mx-auto text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             O que dizem <span className="text-[#2F6DA6]">os pacientes</span>
@@ -1026,7 +1027,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO — ONDE NOS ENCONTRAR? ===== */}
-      <section className="bg-[#F8FAFC] pt-24 pb-12 px-6 overflow-x-hidden">
+      <section id="contato" className="bg-[#F8FAFC] pt-24 pb-12 px-6 overflow-x-hidden">
         <div className="max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* COLUNA ESQUERDA — TEXTO */}
           <motion.div
@@ -1148,10 +1149,14 @@ export default function Hero() {
       {/* ===== RODAPÉ ===== */}
       <section
         id="footer"
-        className="bg-[#0D1B2A] text-gray-300 py-12 px-6 overflow-x-hidden"
+        className="relative overflow-x-hidden bg-gradient-to-br from-[#0D1B2A] via-[#102844] to-[#0D1B2A] text-gray-300 py-12 px-6"
       >
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_15%_15%,rgba(111,175,227,0.08),transparent_35%),radial-gradient(circle_at_85%_0%,rgba(47,109,166,0.08),transparent_40%)]"></div>
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"></div>
+
         <div
           className="
+            relative
             max-w-[1200px] mx-auto 
             flex flex-col md:flex-row 
             justify-between 
@@ -1162,37 +1167,44 @@ export default function Hero() {
 
           {/* ==== COLUNA ESQUERDA ==== */}
           <div>
-            <h3 className="text-2xl font-extrabold text-[#6FAFE3]">
+            <h3 className="text-2xl font-extrabold text-[#7EC3F5]">
               Mirella Letícia
             </h3>
 
-            <p className="mt-3 text-gray-400 leading-relaxed max-w-[420px]">
+            <p className="mt-3 text-gray-300 leading-relaxed max-w-[420px]">
               Fisioterapia domiciliar humanizada em Recife-PE.
               Tratamentos personalizados, cuidado profissional
               e evolução real para cada paciente.
             </p>
 
-            <div className="flex items-center gap-6 mt-4 text-sm text-gray-400">
-              <span className="flex items-center gap-1">🔒 Seguro</span>
-              <span className="flex items-center gap-1">🇧🇷 Atendimento local</span>
-             <span className="flex items-center gap-1">
-              <img 
-                src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
-                alt="WhatsApp"
-                className="w-4 h-4"
-              />
-              WhatsApp
-            </span>
+            <div className="flex flex-wrap items-center gap-3 mt-5 text-sm">
+              {[
+                { label: "Seguro", icon: "🔒" },
+                { label: "Atendimento local", icon: "📍" },
+                { label: "WhatsApp", icon: "", img: "https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff" },
+              ].map((item, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm text-gray-200 shadow-sm"
+                >
+                  {item.img ? (
+                    <img src={item.img} alt={item.label} className="w-4 h-4" />
+                  ) : (
+                    <span>{item.icon}</span>
+                  )}
+                  <span className="text-xs">{item.label}</span>
+                </span>
+              ))}
             </div>
           </div>
 
           {/* ==== NAVEGAÇÃO ==== */}
-          <div className="md:text-right w-full md:w-auto ml-auto">
-            <h4 className="font-semibold text-[#6FAFE3] text-md mb-3">
+          <div className="relative md:text-right w-full md:w-auto ml-auto">
+            <h4 className="font-semibold text-[#7EC3F5] text-md mb-3">
               Navegação
             </h4>
 
-            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-gray-400 text-sm md:text-right">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-gray-300 text-sm md:text-right">
               <a href="#hero" className="hover:text-white transition">Início</a>
               <a href="#aparelhos" className="hover:text-white transition">Aparelhos</a>
 
@@ -1207,7 +1219,7 @@ export default function Hero() {
         </div>
 
         {/* COPYRIGHT */}
-        <div className="max-w-[1200px] mx-auto mt-8 pt-4 border-t border-gray-700 text-center text-gray-500 text-xs">
+        <div className="relative max-w-[1200px] mx-auto mt-8 pt-4 border-t border-white/10 text-center text-gray-400 text-xs">
           © {new Date().getFullYear()} We_Tech — Todos os direitos reservados.
         </div>
       </section>
