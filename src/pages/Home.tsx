@@ -318,13 +318,15 @@ export default function Hero() {
 
   return (
     <>
+    <style>{`html { scroll-behavior: smooth; }`}</style>
     {/* ===== SEÇÃO 1 ===== */}
       <section
         id="hero"
         className="relative w-full overflow-x-hidden bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${fundo})` }}
       >
-        <div className="max-w-[1500px] mx-auto px-6 md:px-16 lg:px-24 xl:px-32 min-h-[85vh] flex items-center pb-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/18 to-white/10" />
+        <div className="relative max-w-[1500px] mx-auto px-6 md:px-16 lg:px-24 xl:px-32 min-h-[85vh] flex items-center pb-10">
           <div className="flex-1 flex flex-col items-center text-center space-y-2">
             
             {/* ===== TEXTO ===== */}
@@ -342,6 +344,7 @@ export default function Hero() {
                 style={{ objectFit: 'contain' }}
                 animate={{ scale: [1, 1.02, 1] }}
                 transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+                loading="lazy"
               />
 
               {/* Nome com efeito de digitação em gradiente */}
@@ -349,8 +352,9 @@ export default function Hero() {
                 flex flex-wrap justify-center md:justify-center
                 text-3xl sm:text-4xl md:text-5xl lg:text-6xl
                 font-extrabold leading-[1.1]
-                bg-gradient-to-r from-[#1F4E79] via-[#2F6DA6] to-[#6FAFE3]
+                bg-gradient-to-r from-[#0F2B46] via-[#1F4E79] to-[#2F6DA6]
                 bg-clip-text text-transparent
+                drop-shadow-[0_12px_28px_rgba(0,0,0,0.3)]
               ">
                 {name.split("").map((char, idx) => (
                   <motion.span
@@ -370,14 +374,16 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: subtitleDelay, duration: 0.45, ease: "easeOut" }}
                 className="
-                  inline-flex flex-wrap items-center justify-center gap-2
-                  px-5 py-3 rounded-full
-                  bg-white/70 backdrop-blur-sm border border-white/30
-                  text-[#1F4E79] text-lg md:text-xl font-semibold shadow-sm
+                  inline-flex flex-wrap items-center justify-center gap-3
+                  px-5 sm:px-6 py-3 rounded-2xl
+                  bg-white/92 backdrop-blur-sm border border-white/60
+                  text-[#0c2339] text-lg sm:text-xl md:text-xl font-semibold tracking-tight
+                  shadow-[0_10px_24px_rgba(0,0,0,0.18)]
                   text-center
+                  max-w-full
                 "
               >
-                <span className="bg-gradient-to-r from-[#1F4E79] to-[#6FAFE3] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#0F2B46] to-[#2F6DA6] bg-clip-text text-transparent">
                   Fisioterapia domiciliar e particular em Recife e região
                 </span>
               </motion.div>
@@ -394,6 +400,7 @@ export default function Hero() {
             <a
               href="#"
               target="_blank"
+              aria-label="Agendar avaliação via WhatsApp"
               className="
                 relative inline-flex items-center gap-3
                 px-14 py-3 rounded-2xl
@@ -420,7 +427,7 @@ export default function Hero() {
         </div>
 
         {/* ===== SEÇÃO 2 — SERVIÇOS ===== */}
-        <div id="servicos" className="w-full bg-[#1F4E79] text-white py-10 px-6">
+        <div id="servicos" className="w-full bg-gradient-to-r from-[#1F4E79] via-[#194268] to-[#0F2B46] text-white py-10 px-6">
           <div
             ref={servicesRef}
             className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-14 text-center"
@@ -535,11 +542,12 @@ export default function Hero() {
                   src={item.img}
                   alt={item.title}
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
 
               {/* CONTEÚDO */}
-              <div className="bg-[#1F4E79] p-6 text-center text-white flex flex-col flex-grow">
+              <div className="bg-gradient-to-r from-[#1F4E79] via-[#285F97] to-[#1F4E79] p-6 text-center text-white flex flex-col flex-grow">
                 {/* TITULO */}
                 <h3 className="text-lg font-semibold">{item.title}</h3>
 
@@ -560,6 +568,7 @@ export default function Hero() {
             <a
               href="#"
               target="_blank"
+              aria-label="Agendar avaliação via WhatsApp"
               className="
                 relative inline-flex items-center gap-3
                 px-14 py-3 rounded-2xl
@@ -608,7 +617,8 @@ export default function Hero() {
             <motion.div
               key={index}
               className="
-                relative bg-[#1F4E79] rounded-3xl w-full max-w-[320px]
+                relative bg-gradient-to-b from-[#1F4E79] via-[#285F97] to-[#1F4E79]
+                rounded-3xl w-full max-w-[320px]
                 pt-20 pb-10 px-6 shadow-lg
                 h-full flex flex-col justify-between
                 hover:shadow-2xl transition-shadow
@@ -632,6 +642,7 @@ export default function Hero() {
                   src={item.img}
                   alt={item.title}
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
 
@@ -658,6 +669,7 @@ export default function Hero() {
             <a
               href="#"
               target="_blank"
+              aria-label="Agendar avaliação via WhatsApp"
               className="
                 relative inline-flex items-center gap-3
                 px-14 py-3 rounded-2xl
@@ -748,14 +760,15 @@ export default function Hero() {
 
           {/* BOTÃO CENTRAL */}
           <div className="text-center mt-14">
-            <div className="relative inline-flex group">
-              <span className="absolute inset-0 bg-gradient-to-r from-[#6FAFE3]/50 via-[#1F4E79]/40 to-[#6FAFE3]/50 blur-lg opacity-70 group-hover:opacity-90 transition" />
+          <div className="relative inline-flex group">
+            <span className="absolute inset-0 bg-gradient-to-r from-[#6FAFE3]/50 via-[#1F4E79]/40 to-[#6FAFE3]/50 blur-lg opacity-70 group-hover:opacity-90 transition" />
 
-              <a
-                href="#"
-                target="_blank"
-                className="
-                  relative inline-flex items-center gap-3
+            <a
+              href="#"
+              target="_blank"
+              aria-label="Agendar avaliação via WhatsApp"
+              className="
+                relative inline-flex items-center gap-3
                   px-14 py-5 rounded-2xl
                   bg-gradient-to-r from-[#1F4E79] via-[#285F97] to-[#6FAFE3]
                   text-white font-semibold shadow-[0_20px_40px_rgba(31,78,121,0.35)]
@@ -843,6 +856,7 @@ export default function Hero() {
                           key={s}
                           src="https://img.icons8.com/?size=100&id=8ggStxqyboK5&format=png&color=E0C22B"
                           className="w-5 h-5"
+                          loading="lazy"
                         />
                       ))}
                     </div>
@@ -859,6 +873,7 @@ export default function Hero() {
 
           {/* SETA ESQUERDA */}
           <button
+            aria-label="Ver depoimento anterior"
             onClick={handlePrev}
             className="
               absolute top-1/2 left-2 md:-left-10
@@ -880,6 +895,7 @@ export default function Hero() {
 
           {/* SETA DIREITA */}
           <button
+            aria-label="Ver próximo depoimento"
             onClick={handleNext}
             className="
               absolute top-1/2 right-2 md:-right-10
@@ -919,7 +935,7 @@ export default function Hero() {
       </section>
 
       {/* ===== SEÇÃO - MÉTRICAS ===== */}
-      <section ref={metricsRef} className="w-full bg-[#1F4E79] py-20 text-white overflow-x-hidden">
+      <section ref={metricsRef} className="w-full bg-gradient-to-r from-[#1F4E79] via-[#194268] to-[#0F2B46] py-20 text-white overflow-x-hidden">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 text-center gap-10 px-6">
 
           {metrics.map((m, idx) => (
@@ -1226,6 +1242,7 @@ export default function Hero() {
       <a
         href="#"
         target="_blank"
+        aria-label="Abrir WhatsApp"
         className="fixed bottom-5 right-5 z-50 hover:scale-110 transition-transform"
       >
         <img
