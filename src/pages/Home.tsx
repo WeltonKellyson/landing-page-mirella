@@ -1085,12 +1085,12 @@ export default function Hero() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.45, delay: 0.05 }}
-                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0]"
+                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0] min-h-[90px]"
               >
                 <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=1F4E79" className="w-7" />
                 <div>
                   <p className="font-semibold text-[#1F4E79]">WhatsApp</p>
-                  <p className="text-[#0F2B46]">(81) 99157-5469</p>
+                  <p className="text-[#0F2B46] text-sm sm:text-base">(81) 99157-5469</p>
                 </div>
               </motion.div>
 
@@ -1100,12 +1100,12 @@ export default function Hero() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.45, delay: 0.12 }}
-                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0]"
+                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0] min-h-[90px]"
               >
-                <img src="https://img.icons8.com/?size=100&id=32292&format=png&color=1F4E79" className="w-7" />
+                <img src="https://img.icons8.com/?size=100&id=Xy10Jcu1L2Su&format=png&color=000000" className="w-7" />
                 <div>
                   <p className="font-semibold text-[#1F4E79]">Instagram</p>
-                  <p className="text-[#0F2B46]">@mirellaalbuquerque_20</p>
+                  <p className="text-[#0F2B46] text-sm sm:text-base">@mirellaalbuquerque_20</p>
                 </div>
               </motion.div>
 
@@ -1115,12 +1115,12 @@ export default function Hero() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.45, delay: 0.18 }}
-                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0]"
+                className="flex items-center gap-3 p-3 rounded-2xl bg-white shadow-sm border border-[#E2E8F0] min-h-[90px]"
               >
-                <img src="https://img.icons8.com/?size=100&id=53388&format=png&color=1F4E79" className="w-7" />
-                <div>
+                <img src="https://img.icons8.com/?size=100&id=Y2GfpkgYNp42&format=png&color=1F4E79" className="w-7" />
+                <div className="flex flex-col min-w-0">
                   <p className="font-semibold text-[#1F4E79]">E-mail</p>
-                  <p className="text-[#0F2B46]">mirellaleticiaalbuquerque@gmail.com</p>
+                  <p className="text-[#0F2B46] text-sm sm:text-base leading-snug">mirellaleticiaalbuquerque@gmail.com</p>
                 </div>
               </motion.div>
 
