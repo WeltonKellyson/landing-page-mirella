@@ -173,6 +173,10 @@ const faqs = [
 
 
 export default function Hero() {
+  const name = "Mirella Albuquerque";
+  const nameDelayPerLetter = 0.04;
+  const nameTypingDuration = name.length * nameDelayPerLetter;
+  const subtitleDelay = nameTypingDuration + 0.3;
   // Número de cards por vez → responsivo
   const getCardsPerView = () => {
     if (window.innerWidth < 640) return 1;     // Mobile
@@ -241,6 +245,18 @@ export default function Hero() {
   };
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { ref: servicesRef, inView: servicesInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+  const { ref: treatmentsRef, inView: treatmentsInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.15,
+  });
+  const { ref: devicesRef, inView: devicesInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.15,
+  });
 
   return (
     <>
@@ -253,109 +269,170 @@ export default function Hero() {
           <div className="flex-1 flex flex-col items-center text-center space-y-2">
             
             {/* ===== TEXTO ===== */}
-            <div className="flex-1 space-y-2 text-center md:text-center">
+            <div className="flex-1 space-y-4 text-center md:text-center">
 
-              {/* LOGO */}
-              <img 
+              {/* LOGO com pulso suave */}
+              <motion.img 
                 src={logo}
                 alt="Logo Mirella"
                 className="
                   w-80 
-                  mx-auto        /* CENTRALIZA EM TODAS AS TELAS */
+                  mx-auto
                   mb-2 md:mb-4
                 "
                 style={{ objectFit: 'contain' }}
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
               />
 
-              <h1 className="
-                text-3xl        /* mobile */
-                sm:text-4xl     /* acima de 640px */
-                md:text-5xl     /* tablets */
-                lg:text-6xl     /* desktops */
-                font-extrabold 
-                text-[#1F4E79] 
-                leading-[1.1]
-                whitespace-nowrap
-                text-center md:text-left
+              {/* Nome com efeito de digitação em gradiente */}
+              <div className="
+                flex flex-wrap justify-center md:justify-center
+                text-3xl sm:text-4xl md:text-5xl lg:text-6xl
+                font-extrabold leading-[1.1]
+                bg-gradient-to-r from-[#1F4E79] via-[#2F6DA6] to-[#6FAFE3]
+                bg-clip-text text-transparent
               ">
-                Mirella Albuquerque
-              </h1>
+                {name.split("").map((char, idx) => (
+                  <motion.span
+                    key={idx}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * nameDelayPerLetter, duration: 0.3 }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                ))}
+              </div>
 
-              <p className="text-[#1F4E79] text-xl md:text-2xl font-semibold mt-2">
-                Fisioterapia domiciliar e particular <br /> em Recife-PE
-              </p>
+              {/* Subtítulo com atraso após a digitação */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: subtitleDelay, duration: 0.45, ease: "easeOut" }}
+                className="
+                  inline-flex items-center gap-2
+                  px-5 py-3 rounded-full
+                  bg-white/70 backdrop-blur-sm border border-white/30
+                  text-[#1F4E79] text-lg md:text-xl font-semibold shadow-sm
+                "
+              >
+                <span className="bg-gradient-to-r from-[#1F4E79] to-[#6FAFE3] bg-clip-text text-transparent">
+                  Fisioterapia domiciliar e particular
+                </span>
+                <span className="hidden sm:inline text-[#1F4E79]/70">•</span>
+                <span className="text-[#1F4E79] font-semibold">
+                  em Recife-PE
+                </span>
+              </motion.div>
             </div>
           </div>
         </div>
 
         {/* BOTÃO CENTRAL */}
         <div className="text-center mb-10">
-          <a
-            href="#"
-            target="_blank"
-            className="
-              inline-flex items-center gap-3
-              bg-[#1F4E79] text-white font-semibold 
-              px-14 py-5 rounded-2xl shadow-xl
+          <div className="relative inline-flex group">
+            {/* Halo suave para destacar o botão */}
+            <span className="absolute inset-0 bg-gradient-to-r from-[#6FAFE3]/50 via-[#1F4E79]/40 to-[#6FAFE3]/50 blur-lg opacity-70 group-hover:opacity-90 transition" />
 
-              hover:bg-[#173f63] 
-              hover:shadow-[0_0_18px_rgba(31,78,121,0.5)]
-              hover:scale-[1.05]
+            <a
+              href="#"
+              target="_blank"
+              className="
+                relative inline-flex items-center gap-3
+                px-14 py-3 rounded-2xl
+                bg-gradient-to-r from-[#1F4E79] via-[#285F97] to-[#6FAFE3]
+                text-white font-semibold shadow-[0_20px_40px_rgba(31,78,121,0.35)]
+                ring-2 ring-white/20 ring-offset-2 ring-offset-[#1F4E79]/30
+                transition-all duration-300 ease-out
+                hover:translate-y-[-2px] hover:shadow-[0_25px_45px_rgba(31,78,121,0.45)]
+                active:translate-y-[0px] active:shadow-[0_12px_28px_rgba(31,78,121,0.35)]
+                animate-[pulse-custom_2.4s_ease-in-out_infinite]
+              "
+            >
+              Agendar uma avaliação gratis
 
-              transition-all duration-300 ease-out
-
-              animate-[pulse-custom_2.4s_ease-in-out_infinite]
-            "
-          >
-            Agendar uma avaliação gratis
-
-            <img
-              src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
-              alt="WhatsApp"
-              className="w-6 h-6"
-            />
-          </a>
+              <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-inner">
+                <img
+                  src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
+                  alt="WhatsApp"
+                  className="w-5 h-5"
+                />
+              </span>
+            </a>
+          </div>
         </div>
 
         {/* ===== SEÇÃO 2 — SERVIÇOS ===== */}
         <div className="w-full bg-[#1F4E79] text-white py-10 px-6">
-          <div className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-14 text-center">
+          <div
+            ref={servicesRef}
+            className="max-w-[1500px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-14 text-center"
+          >
 
             {/* CARD 1 */}
-            <div className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform">
+            <motion.div
+              className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform"
+              initial={{ opacity: 0, y: 24 }}
+              animate={
+                servicesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }
+              }
+              transition={{ duration: 0.5, delay: 0 * 0.12, ease: "easeOut" }}
+            >
               <div className="w-14 h-14 border-2 border-white rounded-full flex items-center justify-center text-2xl">
                 ✔
               </div>
               <h3 className="text-lg font-semibold">Reabilitação Motora</h3>
               <p className="text-sm opacity-90">AVC, fraturas e mobilidade</p>
-            </div>
+            </motion.div>
 
             {/* CARD 2 */}
-            <div className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform">
+            <motion.div
+              className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform"
+              initial={{ opacity: 0, y: 24 }}
+              animate={
+                servicesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }
+              }
+              transition={{ duration: 0.5, delay: 1 * 0.12, ease: "easeOut" }}
+            >
               <div className="w-14 h-14 border-2 border-white rounded-full flex items-center justify-center text-2xl">
                 ✔
               </div>
               <h3 className="text-lg font-semibold">Fortalecimento & Mobilidade</h3>
               <p className="text-sm opacity-90">Alongamentos e equilíbrio</p>
-            </div>
+            </motion.div>
 
             {/* CARD 3 */}
-            <div className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform">
+            <motion.div
+              className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform"
+              initial={{ opacity: 0, y: 24 }}
+              animate={
+                servicesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }
+              }
+              transition={{ duration: 0.5, delay: 2 * 0.12, ease: "easeOut" }}
+            >
               <div className="w-14 h-14 border-2 border-white rounded-full flex items-center justify-center text-2xl">
                 ✔
               </div>
               <h3 className="text-lg font-semibold">Tratamento da Dor</h3>
               <p className="text-sm opacity-90">Técnicas manuais</p>
-            </div>
+            </motion.div>
 
             {/* CARD 4 */}
-            <div className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform">
+            <motion.div
+              className="flex flex-col items-center space-y-3 hover:scale-[1.03] transition-transform"
+              initial={{ opacity: 0, y: 24 }}
+              animate={
+                servicesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }
+              }
+              transition={{ duration: 0.5, delay: 3 * 0.12, ease: "easeOut" }}
+            >
               <div className="w-14 h-14 border-2 border-white rounded-full flex items-center justify-center text-2xl">
                 ✔
               </div>
               <h3 className="text-lg font-semibold">Respiração & Orientação</h3>
               <p className="text-sm opacity-90">Acompanhamento familiar</p>
-            </div>
+            </motion.div>
 
           </div>
         </div>
@@ -375,6 +452,7 @@ export default function Hero() {
 
         {/* GRID 5 EM CIMA + 5 EMBAIXO */}
         <div
+          ref={treatmentsRef}
           className="
             max-w-[1400px] mx-auto
             grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
@@ -382,9 +460,18 @@ export default function Hero() {
           "
         >
           {items.map((item, index) => (
-            <div
+            <motion.div
               key={index}
               className="bg-white rounded-3xl overflow-hidden shadow-lg border border-[#E2E8F0] flex flex-col hover:shadow-2xl transition-shadow"
+              initial={{ opacity: 0, y: 30 }}
+              animate={
+                treatmentsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
+              }
+              transition={{
+                duration: 0.55,
+                delay: (index < 4 ? index : (index - 4) + 4) * 0.12,
+                ease: "easeOut",
+              }}
             >
               {/* FOTO */}
               <div className="w-full h-48 overflow-hidden">
@@ -405,37 +492,41 @@ export default function Hero() {
                   {item.desc}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* BOTÃO CENTRAL */}
         <div className="text-center mt-14">
-          <a
-            href="#"
-            target="_blank"
-            className="
-              inline-flex items-center gap-3
-              bg-[#1F4E79] text-white font-semibold 
-              px-14 py-5 rounded-2xl shadow-xl
+          <div className="relative inline-flex group">
+            <span className="absolute inset-0 bg-gradient-to-r from-[#6FAFE3]/50 via-[#1F4E79]/40 to-[#6FAFE3]/50 blur-lg opacity-70 group-hover:opacity-90 transition" />
 
-              hover:bg-[#173f63] 
-              hover:shadow-[0_0_18px_rgba(31,78,121,0.5)]
-              hover:scale-[1.05]
+            <a
+              href="#"
+              target="_blank"
+              className="
+                relative inline-flex items-center gap-3
+                px-14 py-3 rounded-2xl
+                bg-gradient-to-r from-[#1F4E79] via-[#285F97] to-[#6FAFE3]
+                text-white font-semibold shadow-[0_20px_40px_rgba(31,78,121,0.35)]
+                ring-2 ring-white/20 ring-offset-2 ring-offset-[#1F4E79]/30
+                transition-all duration-300 ease-out
+                hover:translate-y-[-2px] hover:shadow-[0_25px_45px_rgba(31,78,121,0.45)]
+                active:translate-y-[0px] active:shadow-[0_12px_28px_rgba(31,78,121,0.35)]
+                animate-[pulse-custom_2.4s_ease-in-out_infinite]
+              "
+            >
+              Agendar avaliação
 
-              transition-all duration-300 ease-out
-
-              animate-[pulse-custom_2.4s_ease-in-out_infinite]
-            "
-          >
-            Agendar avaliação
-
-            <img
-              src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
-              alt="WhatsApp"
-              className="w-6 h-6"
-            />
-          </a>
+              <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-inner">
+                <img
+                  src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
+                  alt="WhatsApp"
+                  className="w-5 h-5"
+                />
+              </span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -450,6 +541,7 @@ export default function Hero() {
 
         {/* GRID COM 5 CARDS */}
         <div
+          ref={devicesRef}
           className="
             max-w-[1400px] mx-auto
             grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
@@ -457,7 +549,7 @@ export default function Hero() {
           "
         >
           {aparelhos.map((item, index) => (
-            <div
+            <motion.div
               key={index}
               className="
                 relative bg-[#1F4E79] rounded-3xl w-full max-w-[320px]
@@ -465,6 +557,11 @@ export default function Hero() {
                 h-full flex flex-col justify-between
                 hover:shadow-2xl transition-shadow
               "
+              initial={{ opacity: 0, y: 26 }}
+              animate={
+                devicesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }
+              }
+              transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
             >
 
               {/* FOTO CIRCULAR */}
@@ -493,37 +590,41 @@ export default function Hero() {
                 </p>
               </div>
 
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* BOTÃO CENTRAL */}
         <div className="text-center mt-14">
-          <a
-            href="#"
-            target="_blank"
-            className="
-              inline-flex items-center gap-3
-              bg-[#1F4E79] text-white font-semibold 
-              px-14 py-5 rounded-2xl shadow-xl
+          <div className="relative inline-flex group">
+            <span className="absolute inset-0 bg-gradient-to-r from-[#6FAFE3]/50 via-[#1F4E79]/40 to-[#6FAFE3]/50 blur-lg opacity-70 group-hover:opacity-90 transition" />
 
-              hover:bg-[#173f63] 
-              hover:shadow-[0_0_18px_rgba(31,78,121,0.5)]
-              hover:scale-[1.05]
+            <a
+              href="#"
+              target="_blank"
+              className="
+                relative inline-flex items-center gap-3
+                px-14 py-3 rounded-2xl
+                bg-gradient-to-r from-[#1F4E79] via-[#285F97] to-[#6FAFE3]
+                text-white font-semibold shadow-[0_20px_40px_rgba(31,78,121,0.35)]
+                ring-2 ring-white/20 ring-offset-2 ring-offset-[#1F4E79]/30
+                transition-all duration-300 ease-out
+                hover:translate-y-[-2px] hover:shadow-[0_25px_45px_rgba(31,78,121,0.45)]
+                active:translate-y-[0px] active:shadow-[0_12px_28px_rgba(31,78,121,0.35)]
+                animate-[pulse-custom_2.4s_ease-in-out_infinite]
+              "
+            >
+              Agendar avaliação
 
-              transition-all duration-300 ease-out
-
-              animate-[pulse-custom_2.4s_ease-in-out_infinite]
-            "
-          >
-            Agendar avaliação
-
-            <img
-              src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
-              alt="WhatsApp"
-              className="w-6 h-6"
-            />
-          </a>
+              <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-inner">
+                <img
+                  src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
+                  alt="WhatsApp"
+                  className="w-5 h-5"
+                />
+              </span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -570,31 +671,35 @@ export default function Hero() {
 
           {/* BOTÃO CENTRAL */}
           <div className="text-center mt-14">
-            <a
-              href="#"
-              target="_blank"
-              className="
-                inline-flex items-center gap-3
-                bg-[#1F4E79] text-white font-semibold 
-                px-14 py-5 rounded-2xl shadow-xl
+            <div className="relative inline-flex group">
+              <span className="absolute inset-0 bg-gradient-to-r from-[#6FAFE3]/50 via-[#1F4E79]/40 to-[#6FAFE3]/50 blur-lg opacity-70 group-hover:opacity-90 transition" />
 
-                hover:bg-[#173f63] 
-                hover:shadow-[0_0_18px_rgba(31,78,121,0.5)]
-                hover:scale-[1.05]
+              <a
+                href="#"
+                target="_blank"
+                className="
+                  relative inline-flex items-center gap-3
+                  px-14 py-5 rounded-2xl
+                  bg-gradient-to-r from-[#1F4E79] via-[#285F97] to-[#6FAFE3]
+                  text-white font-semibold shadow-[0_20px_40px_rgba(31,78,121,0.35)]
+                  ring-2 ring-white/20 ring-offset-2 ring-offset-[#1F4E79]/30
+                  transition-all duration-300 ease-out
+                  hover:translate-y-[-2px] hover:shadow-[0_25px_45px_rgba(31,78,121,0.45)]
+                  active:translate-y-[0px] active:shadow-[0_12px_28px_rgba(31,78,121,0.35)]
+                  animate-[pulse-custom_2.4s_ease-in-out_infinite]
+                "
+              >
+                Agendar avaliação
 
-                transition-all duration-300 ease-out
-
-                animate-[pulse-custom_2.4s_ease-in-out_infinite]
-              "
-            >
-              Agendar avaliação
-
-              <img
-                src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
-                alt="WhatsApp"
-                className="w-6 h-6"
-              />
-            </a>
+                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-inner">
+                  <img
+                    src='https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff'
+                    alt="WhatsApp"
+                    className="w-5 h-5"
+                  />
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
