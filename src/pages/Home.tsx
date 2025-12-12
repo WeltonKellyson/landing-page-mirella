@@ -514,7 +514,7 @@ export default function Hero() {
 
       {/* ===== SEÇÃO 3 — DOENÇAS E TRATAMENTOS ===== */}
       <section id="tratamentos" className="bg-gradient-to-b from-[#F8FAFC] via-white to-[#F0F6FF] py-20 px-6 overflow-x-hidden">
-        <div className="max-w-[1400px] mx-auto text-center mb-14">
+        <div className="max-w-[1200px] mx-auto text-center mb-14 px-4 sm:px-6">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             Doenças e <span className="text-[#2F6DA6]">Tratamentos</span>
           </h2>
@@ -527,7 +527,7 @@ export default function Hero() {
         <div
           ref={treatmentsRef}
           className="
-            max-w-[1400px] mx-auto
+            max-w-[1200px] mx-auto px-4 sm:px-6
             grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
             gap-10
           "
@@ -608,7 +608,7 @@ export default function Hero() {
       {/* ===== SEÇÃO 4 — APRELHOS E RECURSOS ===== */}
       <section id="aparelhos" className="bg-[#F8FAFC] py-20 px-6 overflow-x-hidden">
         {/* TÍTULO */}
-        <div className="max-w-[1400px] mx-auto text-center mb-14">
+        <div className="max-w-[1200px] mx-auto text-center mb-14 px-4 sm:px-6">
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#1F4E79]">
             Aparelhos e <span className="text-[#2F6DA6]">Recursos</span> utilizados
           </h2>
@@ -618,8 +618,8 @@ export default function Hero() {
         <div
           ref={devicesRef}
           className="
-            max-w-[1400px] mx-auto
-            grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
+            max-w-[1200px] mx-auto px-4 sm:px-6
+            grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
             gap-16 place-items-center
           "
         >
@@ -1051,7 +1051,7 @@ export default function Hero() {
 
       {/* ===== SEÇÃO — ONDE NOS ENCONTRAR? ===== */}
       <section id="contato" className="bg-[#F8FAFC] pt-24 pb-12 px-6 overflow-x-hidden">
-        <div className="max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center px-2 sm:px-4">
           {/* COLUNA ESQUERDA — TEXTO */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
