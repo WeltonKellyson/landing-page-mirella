@@ -395,10 +395,8 @@ export default function Hero() {
                 transition={{ delay: subtitleDelay, duration: 0.45, ease: "easeOut" }}
                 className="
                   inline-flex flex-wrap items-center justify-center gap-3
-                  px-5 sm:px-6 py-3 rounded-2xl
-                  bg-white/92 backdrop-blur-sm border border-white/60
+                  px-5 sm:px-6 py-3 rounded-2xl        
                   text-[#0c2339] text-lg sm:text-xl md:text-xl font-semibold tracking-tight
-                  shadow-[0_10px_24px_rgba(0,0,0,0.18)]
                   text-center
                   max-w-full
                 "
@@ -434,14 +432,6 @@ export default function Hero() {
               "
             >
               Agendar uma avaliação gratis
-
-              <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-inner">
-                <img
-                  src="https://img.icons8.com/?size=100&id=uZWiLUyryScN&format=png&color=ffffff"
-                  alt="WhatsApp"
-                  className="w-5 h-5"
-                />
-              </span>
             </a>
           </div>
         </div>
@@ -691,8 +681,8 @@ export default function Hero() {
               target="_blank"
               aria-label="Agendar avaliação via WhatsApp"
               className="
-                relative inline-flex items-center gap-3
-                px-14 py-3 rounded-2xl
+                relative inline-flex items-center gap-1
+                px-10 py-3 rounded-2xl
                 bg-gradient-to-r from-[#1F4E79] via-[#285F97] to-[#6FAFE3]
                 text-white font-semibold shadow-[0_20px_40px_rgba(31,78,121,0.35)]
                 ring-2 ring-white/20 ring-offset-2 ring-offset-[#1F4E79]/30
@@ -780,16 +770,16 @@ export default function Hero() {
 
           {/* BOTÃO CENTRAL */}
           <div className="text-center mt-14">
-          <div className="relative inline-flex group">
-            <span className="absolute inset-0 bg-gradient-to-r from-[#6FAFE3]/50 via-[#1F4E79]/40 to-[#6FAFE3]/50 blur-lg opacity-70 group-hover:opacity-90 transition" />
+            <div className="relative inline-flex group">
+              <span className="absolute inset-0 bg-gradient-to-r from-[#6FAFE3]/50 via-[#1F4E79]/40 to-[#6FAFE3]/50 blur-lg opacity-70 group-hover:opacity-90 transition" />
 
-            <a
-              href="#"
-              target="_blank"
-              aria-label="Agendar avaliação via WhatsApp"
-              className="
-                relative inline-flex items-center gap-3
-                  px-14 py-5 rounded-2xl
+              <a
+                href="#"
+                target="_blank"
+                aria-label="Agendar avaliação via WhatsApp"
+                className="
+                  relative inline-flex items-center gap-3
+                  px-14 py-3 rounded-2xl
                   bg-gradient-to-r from-[#1F4E79] via-[#285F97] to-[#6FAFE3]
                   text-white font-semibold shadow-[0_20px_40px_rgba(31,78,121,0.35)]
                   ring-2 ring-white/20 ring-offset-2 ring-offset-[#1F4E79]/30
@@ -821,7 +811,7 @@ export default function Hero() {
             O que dizem <span className="text-[#2F6DA6]">os pacientes</span>
           </h2>
           <p className="text-[#2F6DA6] text-lg mt-2">
-            Feedbacks reais de pessoas que já passaram pelo tratamento
+            Feedbacks reais de pessoas que já passaram pelo tratamento:
           </p>
         </div>
 
@@ -1074,7 +1064,7 @@ export default function Hero() {
             </h2>
 
             <p className="text-lg text-[#1F4E79]/80 mb-6">
-              Fale direto pelo WhatsApp, visite nosso Instagram ou venha até nós.
+              Fale pelo WhatsApp, visite nosso Instagram ou envie um e-mail.
             </p>
 
             <div className="flex flex-col gap-4 text-lg text-[#0F2B46]">
@@ -1180,7 +1170,7 @@ export default function Hero() {
             </h3>
 
             <p className="mt-3 text-gray-300 leading-relaxed max-w-[420px]">
-              Fisioterapia domiciliar humanizada em Recife-PE.
+              Fisioterapia domiciliar em Recife-PE.
               Tratamentos personalizados, cuidado profissional
               e evolução real para cada paciente.
             </p>
@@ -1228,7 +1218,16 @@ export default function Hero() {
 
         {/* COPYRIGHT */}
         <div className="relative max-w-[1200px] mx-auto mt-8 pt-4 border-t border-white/10 text-center text-gray-400 text-xs">
-          © {new Date().getFullYear()} We_Tech — Todos os direitos reservados.
+          © {new Date().getFullYear()}{' '}
+          <a
+            href="https://www.instagram.com/we_tech.oficial?igsh=Nng2czAxNnIwbWow&utm_source=qr"
+            target="_blank"
+            rel="noreferrer"
+            className="underline underline-offset-4 decoration-current hover:text-white"
+          >
+            We_Tech
+          </a>{' '}
+          — Todos os direitos reservados.
         </div>
       </section>
 
