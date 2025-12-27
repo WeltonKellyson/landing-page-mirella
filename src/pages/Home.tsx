@@ -109,6 +109,16 @@ const testimonials = [
     text: 'Recomendo a todos que precisam de fisioterapia. O tratamento é completo e muito profissional.',
     stars: 5,
   },
+  {
+    name: 'Seu João',
+    text: 'Depois das sess?es, voltei a caminhar com mais seguran?a e confian?a. Atendimento excelente e muito atencioso.',
+    stars: 5,
+  },
+  {
+    name: 'Dona Maria',
+    text: 'A fisioterapia em casa facilitou muito minha rotina. Profissional dedicada, cuidadosa e sempre pontual.',
+    stars: 5,
+  },
 ];
 
 const items = [
@@ -243,58 +253,27 @@ export default function Hero() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Slides estendidos para permitir loop infinito no carrossel
-  const extendedSlides = [
-    ...testimonials.slice(-visibleCards),
-    ...testimonials,
-    ...testimonials.slice(0, visibleCards),
-  ];
-
   // Estado do carrossel de depoimentos
-  const [currentIndex, setCurrentIndex] = useState(visibleCards);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-  const [isAdjusting, setIsAdjusting] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const step = 100 / visibleCards;
+  const totalPages = Math.ceil(testimonials.length / visibleCards);
 
-  const jumpTo = (index: number) => {
-    setIsAdjusting(true);
-    setIsTransitioning(false);
-    setCurrentIndex(index);
-    requestAnimationFrame(() => setIsTransitioning(true));
-    requestAnimationFrame(() => setIsAdjusting(false));
-  };
-
+  // Sempre volta para a primeira pagina ao mudar quantidade de cards visiveis
   useEffect(() => {
-    jumpTo(visibleCards);
+    setCurrentPage(0);
   }, [visibleCards]);
 
+  // Auto avanca as paginas
   useEffect(() => {
-    if (isAdjusting || isPaused) return;
+    if (isPaused || totalPages <= 1) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => prev + 1);
-    }, 4000);
+      setCurrentPage((prev) => (prev === totalPages - 1 ? 0 : prev + 1));
+    }, 5000);
     return () => clearInterval(interval);
-  }, [visibleCards, isAdjusting, isPaused]);
+  }, [totalPages, isPaused]);
 
-  const handleNext = () => {
-    if (isAdjusting) return;
-    setCurrentIndex((prev) => prev + 1);
-  };
-
-  const handlePrev = () => {
-    if (isAdjusting) return;
-    setCurrentIndex((prev) => prev - 1);
-  };
-
-  // Corrige laço infinito do carrossel, saltando para a posição correta
-  const onTransitionEnd = () => {
-    if (currentIndex <= 0) {
-      jumpTo(testimonials.length);
-    } else if (currentIndex >= testimonials.length + visibleCards) {
-      jumpTo(visibleCards);
-    }
-  };
+  const currentStart = currentPage * visibleCards;
+  const currentTestimonials = testimonials.slice(currentStart, currentStart + visibleCards);
   // Estado do FAQ (qual item está aberto)
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { ref: servicesRef, inView: servicesInView } = useInView({
@@ -333,8 +312,7 @@ export default function Hero() {
     "linear-gradient(135deg, #173f63, #2F6DA6)",
     "linear-gradient(135deg, #285F97, #6FAFE3)",
   ];
-  const baseSlides = testimonials.length;
-  const activeSlide = ((currentIndex - visibleCards) % baseSlides + baseSlides) % baseSlides;
+  const hasMultiplePages = totalPages > 1;
 
   return (
     <>
@@ -821,126 +799,64 @@ export default function Hero() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-
-          <div className="overflow-hidden rounded-xl">
-            <div
-              className={`flex ${isTransitioning ? "transition-transform duration-500" : ""}`}
-              onTransitionEnd={onTransitionEnd}
-              style={{
-                transform: `translateX(-${currentIndex * step}%)`,
-              }}
-            >
-              {extendedSlides.map((t, i) => (
-                <div
-                  key={i}
-                  className="flex-shrink-0 box-border px-4"
-                  style={{
-                    width:
-                      visibleCards === 1
-                        ? "100%"
-                        : visibleCards === 2
-                        ? "50%"
-                        : "33.3333%",
-                  }}
-                >
-                  <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 h-full flex flex-col transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                    
-                    <div className="flex items-center justify-between mb-4">
-                      <div
-                        className="w-12 h-12 rounded-full text-white flex items-center justify-center text-lg font-bold shadow-md"
-                        style={{ background: avatarPalettes[i % avatarPalettes.length] }}
-                      >
-                        {t.name
-                          .split(" ")
-                          .map((p) => p[0])
-                          .join("")
-                          .toUpperCase()}
-                      </div>
-                    </div>
-
-                    <p className="font-semibold text-[#1F4E79]">{t.name}</p>
-
-                    <div className="flex gap-1 my-2">
-                      {Array.from({ length: t.stars }).map((_, s) => (
-                        <img
-                          key={s}
-                          src="https://img.icons8.com/?size=100&id=8ggStxqyboK5&format=png&color=E0C22B"
-                          className="w-5 h-5"
-                          loading="lazy"
-                        />
-                      ))}
-                    </div>
-
-                    <p className="text-[#1E293B] text-sm leading-relaxed">
-                      {t.text}
-                    </p>
-
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {currentTestimonials.map((t, i) => (
+              <div
+                key={`${currentPage}-${i}`}
+                className="bg-white rounded-3xl border border-[#E2E8F0] p-6 h-full flex flex-col transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div
+                    className="w-12 h-12 rounded-full text-white flex items-center justify-center text-lg font-bold shadow-md"
+                    style={{
+                      background:
+                        avatarPalettes[(currentStart + i) % avatarPalettes.length],
+                    }}
+                  >
+                    {t.name
+                      .split(" ")
+                      .map((p) => p[0])
+                      .join("")
+                      .toUpperCase()}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* SETA ESQUERDA */}
-          <button
-            aria-label="Ver depoimento anterior"
-            onClick={handlePrev}
-            className="
-              absolute top-1/2 left-2 md:-left-10
-              -translate-y-1/2 bg-white shadow-md rounded-full
-              p-2 md:p-3 hover:scale-110 transition z-10
-            "
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 text-[#1F4E79]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+                <p className="font-semibold text-[#1F4E79]">{t.name}</p>
 
-          {/* SETA DIREITA */}
-          <button
-            aria-label="Ver próximo depoimento"
-            onClick={handleNext}
-            className="
-              absolute top-1/2 right-2 md:-right-10
-              -translate-y-1/2 bg-white shadow-md rounded-full
-              p-2 md:p-3 hover:scale-110 transition z-10
-            "
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 text-[#1F4E79]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+                <div className="flex gap-1 my-2">
+                  {Array.from({ length: t.stars }).map((_, s) => (
+                    <img
+                      key={s}
+                      src="https://img.icons8.com/?size=100&id=8ggStxqyboK5&format=png&color=E0C22B"
+                      className="w-5 h-5"
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
 
-          {/* INDICADORES */}
-          <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentIndex(idx + visibleCards)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
-                  activeSlide === idx
-                    ? "w-6 bg-[#1F4E79]"
-                    : "w-2.5 bg-[#94A3B8]"
-                }`}
-                aria-label={`Ir para depoimento ${idx + 1}`}
-              />
+                <p className="text-[#1E293B] text-sm leading-relaxed">
+                  {t.text}
+                </p>
+              </div>
             ))}
           </div>
 
+          {hasMultiplePages && (
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: totalPages }).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentPage(idx)}
+                  className={`transition-all duration-300 rounded-full ${
+                    currentPage === idx
+                      ? "w-3 h-3 bg-[#1F4E79]"
+                      : "w-2.5 h-2.5 bg-[#94A3B8] hover:bg-[#1F4E79]/60"
+                  }`}
+                  aria-label={`Ir para pagina ${idx + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
